@@ -1,0 +1,135 @@
+/* Zusätzliche Styles einbinden */
+@import url('tableStyle.css');
+
+/* :root-Konfiguration */
+:root {
+    /* Some colors */
+    --primary: #16506E;
+    --secondary: #C53DCC;
+
+    /* Some dimensions */
+    --mainDistance: 1rem;
+    --baseContentFontSize: 1.2rem;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    font: 10px sans-serif;
+    background-color: black;
+    padding: 0;
+    margin: 0;
+}
+
+#pageWrapper {
+    max-width: 1200px;
+    background-color: white;
+    margin: 0 auto;
+}
+
+
+/* Header-Styling ########################################################## */
+
+#pageHeader {
+    color: white;
+    background-color: var(--primary);
+    padding: var(--mainDistance);
+}
+
+#headerTitle {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin: .25em 0;
+}
+
+#headerSubtitle {
+    font: bold small-caps 1rem sans-serif;
+    margin: 0;
+}
+
+
+/* Main-Navigation-Styling ################################################# */
+
+/* Implement styling here if neccessary ... */
+
+
+/* Main-Styling ############################################################ */
+
+main {
+    font-size: var(--baseContentFontSize);
+    background-color: white;
+    padding: 0 var(--mainDistance);
+}
+
+code {
+    font-weight: bold;
+}
+
+.mainContent {
+    padding: 0 var(--mainDistance);
+    border: solid thin var(--primary);
+    border-radius: var(--mainDistance);
+    margin: var(--mainDistance) 0;
+}
+
+.sectionTitle {
+    color: var(--primary);
+}
+
+h1 {
+    font: small-caps clamp(1.5em, 5vw, 3em) sans-serif;
+}
+
+.sectionSubtitle {
+    font: italic bold 1em sans-serif;
+}
+
+h2 {
+    font: small-caps clamp(1.25em, 5vw, 2.5em) sans-serif;
+}
+
+.demoBox {
+    border: solid thin var(--primary);
+    border-radius: var(--mainDistance);
+    margin: calc(var(--mainDistance) * 2) 0;
+    overflow: hidden;
+}
+
+.demoBoxHeader {
+    background-color: var(--primary);
+    padding: var(--mainDistance);
+}
+
+.artTitle {
+    color: white;
+    font: small-caps clamp(1.25em, 5vw, 2em) sans-serif;
+    margin: .5em 0;
+}
+
+.artSubtitle {
+    color: white;
+}
+
+.sandboxContainer,
+.infoBox {
+    padding: var(--mainDistance);
+}
+
+.infoBox {
+    font-size: calc(var(--baseContentFontSize) * 1.2);
+    background-color: beige;
+}
+
+
+/* Footer-Styling ########################################################## */
+#pageFooter {
+    height: 3rem;
+    background-color: var(--primary);
+}
