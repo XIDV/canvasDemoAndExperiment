@@ -1,8 +1,5 @@
 canvas {
     display: block;
-    margin: 0 auto;
-}
-
-#bspl1aCanvas {
     border: solid thin black;
+    margin: 0 auto;
 }
