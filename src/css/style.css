@@ -1,5 +1,6 @@
 /* Zusätzliche Styles einbinden */
 @import url('tableStyle.css');
+@import url('canvasStyle.css');
 
 /* :root-Konfiguration */
 :root {

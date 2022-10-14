@@ -3,12 +3,12 @@
 
 <!--                                                      head-section -->
     <head>
-        <title><!-- INSERT TITLE HERE --></title>
+        <title>Das canvas-Element</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="Sebastian Peschl">
-        <!-- <meta name="description" content=""> -->
+        <meta name="description" content="Demos und Experimente mit dem canvas-Element.">
         <meta name="generator" content="Visual Studio Code">
         
         <link rel="shortcut icon" href="src/media/img/XIDV_Logo_final.svg" type="image/x-icon">
@@ -20,8 +20,8 @@
     <body>
         <div id="pageWrapper">
             <header id="pageHeader">
-                <div id="headerTitle"><!-- INSERT HEADERTITLE HERE --></div>
-                <div id="headerSubtitle"><!-- INSERT SUBTITLE HERE --></div>
+                <div id="headerTitle">Das <code>canvas</code>-Element</div>
+                <div id="headerSubtitle">Demos und Experimente mit dem canvas-Element.</div>
             </header>
 
             <!-- <nav id="mainNav"></nav> -->
@@ -30,19 +30,19 @@
                 
                 <section class="mainContent" id="primaryContent">
                     <header class="sectionHeader">
-                        <h1 class="sectionTitle"><!-- INSERT SECTIONTITLE HERE --></h1>
+                        <h1 class="sectionTitle">Bitmap-Grafiken dynamisch erstellt</h1>
                         <div class="sectionSubtitle"><!-- INSERT SUBTITLE HERE --></div>
                     </header>
                     <div class="sectionContentText">
                         <p>
-                            <!-- INSERT CONTENT HERE -->
+                            Das <code>canvas</code>-Element stellt quasi eine Programmierschnittstelle zum dynmaischen erstellen und anzeigen von Pixelgrafiken bereit. Der eigentliche Content wird via JavaScript erstellt. Es stellt einen Gegensatz zum SVG-Format dar, welches XML-basiert ist.
                         </p>
                     </div>
                 </section>
 
                 <section class="mainContent">
                     <header class="sectionHeader">
-                        <h2 class="sectionTitle"><!-- INSERT SECTIONTITLE HERE --></h2>
+                        <h2 class="sectionTitle">Beispiele</h2>
                         <div class="sectionSubtitle"><!-- INSERT SUBTITLE HERE --></div>
                     </header>
                     <div class="sectionContentText">
@@ -51,29 +51,66 @@
                         </p>
                     </div>
 
-                    <article class="demoBox">
+                    <article class="demoBox" id="bsplOneA">
                         <header class="demoBoxHeader">
-                            <h3 class="artTitle"><!-- INSERT ARTICLETITLE HERE --></h3>
-                            <div class="artSubtitle"><!-- INSERT SUBTITLE HERE --></div>
+                            <h3 class="artTitle">Beispiel 1a</h3>
+                            <div class="artSubtitle">Linien und einfache Formen in einem <code>canvas</code>-Elment mit fester Breite und Höhe.</div>
                         </header>
                         <div class="sandboxContainer">
 
-                            <!-- INSERT STUFF FOR DEMONSTRATION HERE -->
+                            <canvas id="bspl1aCanvas" width="400" height="200">
+                                <p>
+                                    Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
+                                </p>
+                            </canvas>
 
                         </div>
                         
                         <div class="infoBox">
                             <details>
                                 <summary>
-                                    <!-- INSERT STUFF FOR DEMONSTRATION HERE -->
+                                    Rechteck, Quadrat und Pfad aus Linien.
                                 </summary>
                                 <p>
-                                    <!-- INSERT STUFF FOR DEMONSTRATION HERE -->
+                                    Zum erstellen des grünen Rechtecks wird zuerst der Wert des <code>fillStyle</code>-Attributs des CanvasRenderingContext2D-Objektes (<code>context</code>) mittels Angabe eines HSLA-Wertes eingestellt. <br>
+                                    Anschließend wird die Methode <code>fillFrect()</code> aufgerufen. Dieser werden vier Parameter übergeben. Die ersten beiden sind die Startkoordianten (x/y), die nächsten zwei (hier 360 und 80) sind <strong>Längenangaben</strong>, jeweils in x- und y-Richtung. <strong>Das sind <u>keine</u> Endkoordinaten</strong>! <br>
+                                    Die rechnerischen Endkoordinaten wären in diesem Fall (20 + 360 und 20 + 80) <strong>x=380 und y=100</strong>.
                                 </p>
                             </details>
                         </div>
 
                     </article>
+
+                    <article class="demoBox" id="bsplOneB">
+                        <header class="demoBoxHeader">
+                            <h3 class="artTitle">Beispiel 1b</h3>
+                            <div class="artSubtitle">Linien und einfache Formen in einem <code>canvas</code>-Elment mit fester Breite und Höhe.</div>
+                        </header>
+                        <div class="sandboxContainer">
+
+                            <canvas id="bspl1bCanvas" width="400" height="200">
+                                <p>
+                                    Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
+                                </p>
+                            </canvas>
+
+                        </div>
+                        
+                        <div class="infoBox">
+                            <details>
+                                <summary>
+                                    Rechteck, Quadrat und Pfad aus Linien.
+                                </summary>
+                                <p>
+                                    Zum erstellen des grünen Rechtecks wird zuerst der Wert des <code>fillStyle</code>-Attributs des CanvasRenderingContext2D-Objektes (<code>context</code>) mittels Angabe eines HSLA-Wertes eingestellt. <br>
+                                    Anschließend wird die Methode <code>fillFrect()</code> aufgerufen. Dieser werden vier Parameter übergeben. Die ersten beiden sind die Startkoordianten (x/y), die nächsten zwei (hier 360 und 80) sind <strong>Längenangaben</strong>, jeweils in x- und y-Richtung. <strong>Das sind <u>keine</u> Endkoordinaten</strong>! <br>
+                                    Die rechnerischen Endkoordinaten wären in diesem Fall (20 + 360 und 20 + 80) <strong>x=380 und y=100</strong>.
+                                </p>
+                            </details>
+                        </div>
+
+                    </article>
+
                 </section>
     
             </main>
