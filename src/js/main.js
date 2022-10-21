@@ -4,10 +4,15 @@ document.addEventListener('DOMContentLoaded', dcl => {
     const bspl1aCanvas = document.querySelector('#bspl1aCanvas');
     const bspl1bCanvas = document.querySelector('#bspl1bCanvas');
     const bspl1cCanvas = document.querySelector('#bspl1cCanvas');
+    
+    const bspl1dCanvas = document.querySelector('#bspl1dCanvas');
+
     if (bspl1aCanvas.getContext) {
         drawBspl1a(bspl1aCanvas);
         drawBspl1b(bspl1bCanvas);
         drawBspl1c();
+
+        window.requestAnimationFrame(redrawBspl1d);
     }
 
 
@@ -36,7 +41,54 @@ document.addEventListener('DOMContentLoaded', dcl => {
             }
             context.fillRect(20, 20, deltaXY, deltaXY,);
         }, 100);
+    }
+
+
+    function redrawBspl1d() {
+        const time = new Date();
+        // const lineLength = time.getSeconds() * 10 / 2;
+        const lineLength = time.getMilliseconds() / 5;
+        const lineHeight = time.getSeconds() + 10;
+
+        const hue = getRandomInt(15);
+        const sat = 100;
+        const lum = 50;
         
+        const context = bspl1dCanvas.getContext('2d');
+        context.clearRect(0, 0, 400, 300);
+
+        context.strokeStyle = `black`;
+        context.fillStyle = `black`;
+        
+        context.save();
+        
+        context.lineWidth = 20;
+        context.strokeStyle = `hsl(${hue}, ${sat}%, ${lum}%)`;
+        context.fillStyle = `hsl(${hue}, ${sat}%, ${lum}%)`;
+        context.beginPath();
+        context.moveTo(0, lineHeight * 2);
+        context.lineTo(lineLength, lineHeight * 2);
+        context.stroke();
+        context.closePath();
+        
+        context.restore();
+
+        context.font = 'bold 2.5rem sans-serif';            // Defintion d. Schrift
+        context.textBaseline = 'top';                       // Definiton d. Grundlinie
+        context.fillText(`${time.getSeconds()}`, lineLength + 20, lineHeight * 2 - 10);
+        
+        context.restore()
+        
+        context.save();
+        
+        context.translate(20, 250);
+        context.font = 'bold 2rem sans-serif';            // Defintion d. Schrift
+        context.textBaseline = 'top';                       // Definiton d. Grundlinie
+        context.fillText(`The Time is: ${time.getHours()}:${time.getMinutes()}`, 0, 0);
+
+        context.restore();
+
+        window.requestAnimationFrame(redrawBspl1d);
     }
 
 });
