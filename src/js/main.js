@@ -7,8 +7,36 @@ document.addEventListener('DOMContentLoaded', dcl => {
     if (bspl1aCanvas.getContext) {
         drawBspl1a(bspl1aCanvas);
         drawBspl1b(bspl1bCanvas);
+        drawBspl1c();
+    }
+
+
+    function drawBspl1c() {
+        let deltaXY = 0;
+        let change = false;
+
+        setInterval(() => {
+            let context = bspl1cCanvas.getContext('2d')
+            const hue = getRandomInt(360);
+            const sat = getRandomInt(100);
+            const lum = getRandomInt(50);
+    
+            context.fillStyle = `hsl(${hue}, ${sat}%, ${lum}%)`;
+            context.clearRect(20, 20, deltaXY, deltaXY,);
+            if(deltaXY == 0) {
+                change = false;
+            } else if(deltaXY == 280) {
+                change = true;
+            }
+
+            if(!change) {
+                deltaXY += 1;
+            } else {
+                deltaXY -= 1;
+            }
+            context.fillRect(20, 20, deltaXY, deltaXY,);
+        }, 100);
         
-        setInterval(drawBspl1c(), 1000);
     }
 
 });
@@ -100,6 +128,9 @@ function drawBspl1b(canvas) {
 }
 
 
-function drawBspl1c() {
-    
+
+
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
 }

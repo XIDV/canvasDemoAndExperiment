@@ -125,7 +125,7 @@
                     <article class="demoBox" id="bsplOneC">
                         <header class="demoBoxHeader">
                             <h3 class="artTitle">Beispiel 1c</h3>
-                            <div class="artSubtitle">Animation von Canvas (Test)</div>
+                            <div class="artSubtitle">Animation von Canvas (unter Verwendung von <code>setInterval()</code>)</div>
                         </header>
                         <div class="sandboxContainer">
 
@@ -138,12 +138,34 @@
                         </div>
                         
                         <div class="infoBox">
+                            <p>Hier wird ein Farbwechsel und eine kontinuierliche Vergrößerung und Verkleinerung des Quadrates mit <code>setInterval()</code> realisiert. Dieser Ansatz in jedoch nicht zweckmäßig.</p>
+                            <p>Im folgenden Beispiel wird auf die Methode <code>requestAnimationFrame()</code> zurückgegriffen, welche für diese Aufgabe besser geeignet ist.</p>
+                        </div>
+
+                    </article>
+
+                    <article class="demoBox" id="bsplOneD">
+                        <header class="demoBoxHeader">
+                            <h3 class="artTitle">Beispiel 1d</h3>
+                            <div class="artSubtitle">Animation von Canvas (unter Verwendung von <code>requestAnimationFrame()</code>)</div>
+                        </header>
+                        <div class="sandboxContainer">
+
+                            <canvas id="bspl1dCanvas" width="400" height="300">
+                                <p>
+                                    Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
+                                </p>
+                            </canvas>
+
+                        </div>
+                        
+                        <div class="infoBox">
                             <details>
                                 <summary>
-                                    
+
                                 </summary>
                                 <p>
-                                
+                                    
                                 </p>
                             </details>
                         </div>
