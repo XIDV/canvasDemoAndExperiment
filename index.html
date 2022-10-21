@@ -99,10 +99,51 @@
                         <div class="infoBox">
                             <details>
                                 <summary>
+                                    Ausgabe von Text, einm Pfad bestehend aus Linien, sowie ein Rechteck und ein Dreieck
+                                </summary>
+                                <p>
+                                    Für die Ausgabe von Text wird zuerst die Füllfarbe via <code>fillStyle</code>, der Font via <code>font</code> sowie die Grundlinie via <code>textBaseline</code> definiert.
+                                </p>
+                                <p>
+                                    Die Ausgabe des Pfades durch Linien wird wie zuvor bei Beispiel 1A realisiert.
+                                </p>
+                                <h4>Ausgabe eines Rechtecks</h4>
+                                <p>Hier wird im Vorfeld mit <code>save()</code> der Zeichenstatus (drawing state) gespeichert, welcher später mit <code>restore() wiederhergestellt werden kann.</code><br>Welche Eigenschaften des CanvasRenderingContext2D alle gespeichert werden können entnehmen Sie bitte <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save" target="_blank">hier</a> der Dokumentation.</p>
+                                <p>Außerdem wird vor der Ausgabe des Rechtecks mit <code>translate()</code> der der Canvas (und dessen Koordiantenursprung) entsprechend der spezifizierten Werte verschoben.</p>
+                                <p>Der Ursprung des Rechtecks, welches nun ausgegeben wird befindet sich (relativ gesehen) bei x=0, y=0. Berücksichtigt man jedoch die zuvor durchgefürte Verschiebung des Canvas, so befindet sich der Ursprung des Rechtecks (global betrachtet) bei x=20, y=4.</p>
+                                
+                                <h4>Ausgabe eines Dreiecks</h4>
+                                <p>Nach der Definition einer Füllfarbe und und einer Linienstärke mit <code>lineWidth = 1;</code>, wobei letzteres eigentlich überflüssig ist, da im Folgenden keine Kontur, sondern eine dreieckige Fläche ausgegeben wird, erfolgt eine weitere Speicherung des Zeichenstatus des Canvas.</p>
+                                <p>Nach einer weiteren Verschiebung des CanvasRenderingContext2D wird mit <code>beginPath()</code> mit der Definition eines neuen Pfades begonnen. <br> Auf <code>moveTo(0, 0)</code> <strong><u>oder</u></strong> <code>lineTo(0, 0)</code> könnte in diesem Fall verzichtet werden.</p>
+                                <p>Mit <code>fill()</code> wird die dreieckige Fläche auf den Canvas gezeichnet und mit <code>closePath()</code> die Pfaderstellung beendet</p>
+                                <p>Abschließend wird der CanvasRenderingContext2D auf den letzten Wiederherstellungspunkt zurückgesetzt. Es gelten nun also wieder die Parameter wie bei der Erstellung des Rechtecks.</p>
+                            </details>
+                        </div>
+
+                    </article>
+
+                    <article class="demoBox" id="bsplOneC">
+                        <header class="demoBoxHeader">
+                            <h3 class="artTitle">Beispiel 1c</h3>
+                            <div class="artSubtitle">Animation von Canvas (Test)</div>
+                        </header>
+                        <div class="sandboxContainer">
+
+                            <canvas id="bspl1cCanvas" width="400" height="300">
+                                <p>
+                                    Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
+                                </p>
+                            </canvas>
+
+                        </div>
+                        
+                        <div class="infoBox">
+                            <details>
+                                <summary>
                                     
                                 </summary>
                                 <p>
-                                    
+                                
                                 </p>
                             </details>
                         </div>

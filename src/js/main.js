@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', dcl => {
 
     const bspl1aCanvas = document.querySelector('#bspl1aCanvas');
     const bspl1bCanvas = document.querySelector('#bspl1bCanvas');
+    const bspl1cCanvas = document.querySelector('#bspl1cCanvas');
     if (bspl1aCanvas.getContext) {
         drawBspl1a(bspl1aCanvas);
         drawBspl1b(bspl1bCanvas);
+        
+        setInterval(drawBspl1c(), 1000);
     }
 
 });
@@ -61,7 +64,7 @@ function drawBspl1b(canvas) {
 
 
     // Linien (Pfad) zeichnen
-    context.strokeStyle = 'hsla(20, 100%, 50%, 1)';
+    context.strokeStyle = 'hsla(220, 100%, 50%, 1)';
     context.lineWidth = 2;
     context.beginPath();
     context.moveTo(20, 60);
@@ -81,15 +84,22 @@ function drawBspl1b(canvas) {
 
     // zeichne Dreieck
     context.fillStyle = 'hsla(220, 100%, 50%, .5)';
+    // context.strokeStyle = 'hsla(20, 50%, 50%, 1)'
     context.lineWidth = 1;                              // überflüssig !?
     context.save();
     context.translate(45, 0);
     context.beginPath();
-    context.moveTo(0, 0);                               // überflüssig !?
+    context.moveTo(0, 0);                               // überflüssig !?  entweder ...
     context.lineTo(30, 0);
     context.lineTo(15, 30);
-    context.lineTo(0, 0);                               // überflüssig !?
+    context.lineTo(0, 0);                               // überflüssig !?  ... oder
     context.fill();
+    // context.stroke();
     context.closePath();
     context.restore();
+}
+
+
+function drawBspl1c() {
+    
 }
