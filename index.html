@@ -165,10 +165,48 @@
                                 <summary>
                                     Animierte Anzeige der akutellen Zeit innerhalb eines <code>canvas</code>-Elements.
                                 </summary>
+                                <p>
+                                    Zunächst wird das <code>canvas</code>-Element in der Konstanten <code>bspl1dCanvas</code> gesichert.
+                                </p>
                                 <h4>Die Methode <code>requestAnimationFrame()</code></h4>
                                 <p>
-
+                                    Das <code>window</code>-Objekt hält die Methode <code>requestAnimationFrame()</code> bereit und bietet, ähnlich wie <code>setTimeout()</code>, die Möglichkeit Funktionen zeitlich verzögert auszuführen. Diese Methode benötigt als <i>callback</i> ein <strong>Funktionsobjekt</strong>. (hier: Funktonsname ohne rundes Klammerpaar und Anführungszeichen.) <br>
+                                    Diese ist hier die Funktion <code>redrawBspl1d()</code>
                                 </p>
+                                <p>
+                                    Die Methode liefert als Rückgabewert eine <code>requestID</code> zurück. Diese wird (später) als Parameter f. d. Methode <code>cancelAnimationFrame()</code> benötigt um die Animation zu beenden.
+                                </p>
+                                <h4>Die Funktion <code>redrawBspl1d()</code></h4>
+                                <p>
+                                    Mithilfe der Konstanten <code>time</code> vom Typ <code>Date()</code> und desen Methoden werden die Konstanten <code>lineLength</code> und <code>lineHeight</code> initialisiert. <br>
+                                    Für die Generierung einer HSL-Zufallsfarbe wird zur Ermittlung eines zufälligen Hue-Wertes auf die Funktion <code>getRandomInt()</code> zurückgegriffen.
+                                </p>
+                                <p>
+                                    Der CanvasRenderingContext2D wird der Konstanten <code>context</code> zugewiesen und es erfolgt nach der Löschung des Canvas eine grundlegende Intialisierung der <code>context</code>-Eigenschaften <code>strokeStyle</code> und <code>fillStyle</code>, bevor dieser mittels <code>save()</code> gesichert wird.
+                                </p>
+                                <p>
+                                    Die Nachfolgenden Anweisungen sind weitestgehend Selbsterklärend. Wichtig ist hier lediglich, dass die Veränderungen in der grafischen und textlichen Elemente des Canvas in zeitliche Abhängigkeit gebracht sind. So definiert sich die zunehmende Länge des Sekundenbalkens gemäß dem ermittelten und modifizierten Wert der Millisekunden des <code>Date()</code>-Objektes <code>time</code>.
+                                </p>
+                                <p>
+                                    In der letzten Zeile der Funktion geschehen zwei wesentliche Dinge.
+                                </p>
+                                <ol>
+                                    <li>
+                                        Der Wert der Variablen <code>requestID</code> wird aktualisiert (um die Animation bei Bedarf mittels <code>cancelAnimationFrame()</code> beenden zu können).
+                                    </li>
+                                    <li>
+                                        Andererseits ruft sich die Funktion selbst erneut auf damit die Animation kontinuierlich fortgesetzt wird.
+                                    </li>
+                                </ol>
+                                <h4>Beenden d. Animation mit <code>cancelAnimationFrame()</code></h4>
+                                <p>
+                                    Der Button mit der ID <code>stopBspl1dAnim</code> erhält einen EventListener vom Typ <code>'click'</code> und als <i>callback</i> die Funktion <code>stopAnim1d()</code>.
+                                </p>
+                                <p>
+                                    Die Funktion prüft zuerst ob <code>requestID</code> überhaupt initialisiert wurde. Wenn das der Fall ist wird die Methode <code>cancelAnimationFrame()</code> des <code>window</code>-Objektes aufgerufen. <br>
+                                    Diese erhält als Parameter den Wert von <code>requestID</code>. Aus diesem Grund ist so wichtig, das bei jedem Aufruf von <code>requestAnimationFrame()</code> dieser Wert aktualisiert wird, da sich dieser stetig verändert.
+                                </p>
+
                             </details>
                         </div>
 

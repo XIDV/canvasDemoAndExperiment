@@ -63,7 +63,7 @@ function initContent() {
         const lineLength = time.getMilliseconds() / 5;
         const lineHeight = time.getSeconds() + 10;
 
-        const hue = getRandomInt(15);
+        const hue = getRandomInt(90);
         const sat = 100;
         const lum = 50;
         
