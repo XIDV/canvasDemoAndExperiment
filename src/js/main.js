@@ -8,16 +8,16 @@ function initContent() {
     const bspl1aCanvas = document.querySelector('#bspl1aCanvas');
     const bspl1bCanvas = document.querySelector('#bspl1bCanvas');
     const bspl1cCanvas = document.querySelector('#bspl1cCanvas');
-    
     const bspl1dCanvas = document.querySelector('#bspl1dCanvas');
     let requestID = undefined;
+    const bspl1eCanvas = document.querySelector('#bspl1eCanvas');
 
     if (bspl1aCanvas.getContext) {
         drawBspl1a(bspl1aCanvas);
         drawBspl1b(bspl1bCanvas);
         drawBspl1c();
-
         requestID = window.requestAnimationFrame(redrawBspl1d);
+        drawBspl1e(bspl1eCanvas);
     }
 
     document.querySelector('#stopBspl1dAnim').addEventListener('click', stopAnimBspl1d);
@@ -197,7 +197,57 @@ function drawBspl1b(canvas) {
 }
 
 
+// Zeichnen von bspl1eCanvas --------------------------------------------------
+function drawBspl1e(canvas) {
+    const context = canvas.getContext('2d');
 
+    context.strokeStyle = 'hsl(220, 100%, 50%)';
+    context.fillStyle = 'hsl(20, 100%, 50%)';
+    context.lineWidth = 2;
+
+    // Zeichene vollen Kreis
+    context.beginPath();
+    context.arc(100, 100, 50, 0, 2 * Math.PI);
+    context.stroke();
+    context.closePath();
+
+    // Zeichne halben Kreis
+    context.beginPath();
+    context.arc(100, 100, 60, 0, 1 * Math.PI);
+    context.stroke();
+    context.closePath();
+
+    // Zeichen viertel Kreis (im Uhrzeigersinn)
+    context.beginPath();
+    context.arc(100, 100, 70, 0, .5 * Math.PI);
+    context.stroke();
+    context.closePath();
+
+    // Zeichen viertel Kreis (entgegen Uhrzeigersinn)
+    context.beginPath();
+    context.arc(100, 100, 80, 1 * Math.PI, .5 * Math.PI, true);
+    context.stroke();
+    context.closePath();
+
+    // Zeichen achtel Kreis (im Uhrzeigersinn)
+    context.beginPath();
+    context.arc(100, 100, 90, .375 * Math.PI, .625 * Math.PI);
+    context.stroke();
+    context.closePath();
+
+    // Zeichne abgerundeten Pfad
+    context.beginPath();
+    context.moveTo(100, 25);
+    context.lineTo(250, 25);
+    context.arc(250, 75, 50, 1.5 * Math.PI, 2 * Math.PI);
+    context.lineTo(300, 250);
+    context.lineTo(275, 250);
+    context.lineTo(275, 75);
+    context.arc(250, 75, 25, 0, 3.5 * Math.PI, true);
+    context.lineTo(100, 50);
+    context.fill();
+    context.closePath();
+}
 
 
 function getRandomInt(max) {
