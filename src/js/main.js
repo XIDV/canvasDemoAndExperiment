@@ -1,20 +1,32 @@
 document.addEventListener('DOMContentLoaded', dcl => {
     console.log('Document is ready ...');
+    initContent();
+});
 
+
+function initContent() {
     const bspl1aCanvas = document.querySelector('#bspl1aCanvas');
     const bspl1bCanvas = document.querySelector('#bspl1bCanvas');
     const bspl1cCanvas = document.querySelector('#bspl1cCanvas');
     
     const bspl1dCanvas = document.querySelector('#bspl1dCanvas');
+    let requestID = undefined;
 
     if (bspl1aCanvas.getContext) {
         drawBspl1a(bspl1aCanvas);
         drawBspl1b(bspl1bCanvas);
         drawBspl1c();
 
-        window.requestAnimationFrame(redrawBspl1d);
+        requestID = window.requestAnimationFrame(redrawBspl1d);
     }
 
+    document.querySelector('#stopBspl1dAnim').addEventListener('click', stopAnimBspl1d);
+
+    function stopAnimBspl1d() {
+        if(requestID) {
+            window.cancelAnimationFrame(requestID);
+        }
+    }
 
     function drawBspl1c() {
         let deltaXY = 0;
@@ -44,7 +56,8 @@ document.addEventListener('DOMContentLoaded', dcl => {
     }
 
 
-    function redrawBspl1d() {
+    function redrawBspl1d(timestamp) {
+        // console.log(timestamp);
         const time = new Date();
         // const lineLength = time.getSeconds() * 10 / 2;
         const lineLength = time.getMilliseconds() / 5;
@@ -88,10 +101,14 @@ document.addEventListener('DOMContentLoaded', dcl => {
 
         context.restore();
 
-        window.requestAnimationFrame(redrawBspl1d);
+        /* 
+            Achtung!!! requestID muss bei jedem Aufruf von requestAnimationFrame()
+            aktualisiert werden. Ansonsten kann cancelAnimationFrame(requestID) die
+            Animation nicht beendet werden.
+        */
+        requestID = window.requestAnimationFrame(redrawBspl1d);
     }
-
-});
+}
 
 
 // Zeichenen von bspl1aCanvas -------------------------------------------------
