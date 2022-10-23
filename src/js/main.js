@@ -21,10 +21,18 @@ function initContent() {
         requestID = window.requestAnimationFrame(redrawBspl1d);
         drawBspl1e(bspl1eCanvas);
 
-        drawBspl1fKoordSystem(bspl1fCanvas);
+        drawBspl1fDrawGraph(bspl1fCanvas);
     }
 
     document.querySelector('#stopBspl1dAnim').addEventListener('click', stopAnimBspl1d);
+
+
+    document.querySelector('#freqSlider').addEventListener('input', e => {
+        document.querySelector('#freqDisp').value = e.target.value;
+        drawBspl1fDrawGraph(bspl1fCanvas, 150, parseFloat(e.target.value));
+    });
+
+
 
     function stopAnimBspl1d() {
         if(requestID) {
@@ -279,37 +287,68 @@ function drawBspl1e(canvas) {
     context.closePath();
 }
 
+
 // Zeichnen des Koordiantensystems von bspl1fCanvas ---------------------------
 function drawBspl1fKoordSystem(canvas) {
     let ctx = canvas.getContext('2d');
     ctx.strokeStyle = 'black';
     ctx.fillStyle = 'black';
     ctx.lineWidth = 2;
+    ctx.beginPath();
     // Zeichne y-Achse
-    ctx.moveTo(25, 25);
-    ctx.lineTo(25, 275);
+    ctx.moveTo(30, 25);
+    ctx.lineTo(30, 275);
     ctx.stroke();
     // Zeichne x-Achse
     ctx.moveTo(5, 150);
     ctx.lineTo(395, 150)
     ctx.stroke();
+    // zeichne Achsenmarkierungen
+    for(let i = 30; i <= 270; i += 10) {
+        ctx.moveTo(25, i);
+        ctx.lineTo(30, i);
+        ctx.stroke();
+    }
+    
+    for(let i = 40; i <= 375; i += 10) {
+        ctx.moveTo(i, 150);
+        if(i == 130 || i == 230 || i == 330) {
+            ctx.lineTo(i, 160);    
+        } else {
+            ctx.lineTo(i, 155);
+        }
+        ctx.stroke();
+    }
+    ctx.closePath();
     // Zeichne Achsenbeschriftungen
     ctx.font = '1rem sans-serif';
     ctx.textBaseline = 'top';
     ctx.fillText('V', 5, 15);
     ctx.fillText('Hz', 377, 155);
+}
 
-    for(let i = 50; i <= 250; i += 25) {
-        ctx.moveTo(20, i);
-        ctx.lineTo(25, i);
-        ctx.stroke();
-    }
+// Graph Zeichnen
+function drawBspl1fDrawGraph(canvas, amp=150, freq=1) {
+    let step = Math.sqrt(200 / freq);
+    console.log(step);
 
-    for(let i = 50; i <= 350; i += 25) {
-        ctx.moveTo(i, 150);
-        ctx.lineTo(i, 155);
-        ctx.stroke();
-    }
+
+    let ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 400, 300);
+    drawBspl1fKoordSystem(canvas);
+    ctx.save()
+    ctx.translate(30, 150);
+    ctx.beginPath();
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.moveTo(0, 0);
+    // ctx.quadraticCurveTo(cpx, cpy, endX, endY);
+    ctx.quadraticCurveTo(step, -(amp * 1.5), step * 2, 0);
+    ctx.quadraticCurveTo(step * 3, amp * 1.5, step * 4, 0);
+    // ctx.quadraticCurveTo()
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
 }
 
 
