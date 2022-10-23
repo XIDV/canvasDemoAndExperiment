@@ -134,3 +134,16 @@ h2 {
     height: 3rem;
     background-color: var(--primary);
 }
+
+
+/* additional Styling ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+label {
+    display: inline-block;
+    width: 6rem;
+}
+
+#ampDisp,
+#freqDisp {
+    display: inline-block;
+    width: 3rem;
+}

@@ -259,18 +259,33 @@
 
                     </article>
 
-                    <article class="demoBox" id="bsplOneX">
+                    <article class="demoBox" id="bsplOneF">
                         <header class="demoBoxHeader">
-                            <h3 class="artTitle">Beispiel 1X</h3>
-                            <div class="artSubtitle">XXX</div>
+                            <h3 class="artTitle">Beispiel 1f</h3>
+                            <div class="artSubtitle">Dynamische Anpassung grafischer Elemente</div>
                         </header>
                         <div class="sandboxContainer">
 
-                            <canvas id="bspl1XXXCanvas" width="400" height="300">
+                            <canvas id="bspl1fCanvas" width="400" height="300">
                                 <p>
                                     Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
                                 </p>
                             </canvas>
+                            <form class="bspl1fForm">
+                                <fieldset>
+                                    <legend>Parameter anpassen</legend>
+                                    <div class="iElContainer">
+                                        <label for="ampSlider">Amplitude</label>
+                                        <input type="range" name="ampSlider" id="ampSlider" min="0" max="100" value="50">
+                                        <input type="text" name="ampDisp" id="ampDisp" disabled>
+                                    </div>
+                                    <div class="iElContainer">
+                                        <label for="freqSlider">Frequenz</label>
+                                        <input type="range" name="freqSlider" id="freqSlider" min="1" max="200" value="100">
+                                        <input type="text" name="freqDisp" id="freqDisp" disabled>
+                                    </div>
+                                </fieldset>
+                            </form>
 
                         </div>
                         
