@@ -230,9 +230,30 @@
                         <div class="infoBox">
                             <details>
                                 <summary>
-
+                                    Kreise, Rundungen und Kurven
                                 </summary>
-
+                                <h4>Kreis</h4>
+                                <p>
+                                    Die Ausgabe von Kreisen, bzw. Kreisbögen erfolgt mit der Methode <code>arc()</code>. Diese verlangt vier Parameter. Die ersten beiden definieren die Koordiaten des Kreismittelpunktes, die anderen beiden Anderen stellen den Start- und Endwinkel dar. Hierbei ist zu beachten, das diese Angaben im Bogenmaß anzugeben sind.
+                                </p>
+                                <p>
+                                    Optional kann ein fünfter Parameter hinzugefügt werden, welcher definiert ob der Kreis, bzw. Bogen im, oder engegen dem Uhrzeigersinn gezeichnet werden soll. Dieser Parameter ist als boolscher Wert anzugeben. <code>true</code> bedeutet in diesem Zusammenhang, dass der Kreis/Bogen <strong>entgegen</strong> dem Uhrzeigersinn gezeichnet wird.
+                                </p>
+                                <h4>Rundungen</h4>
+                                <p>
+                                    Rundungen werden hier anhand einer, mit Hilfe eines Pfades konstruierten, Fläche demonstriert. <br>
+                                    Die Rundungen werden mit Hilfe der Methode <code>arc()</code> erzeugt.
+                                </p>
+                                <h4>Bézier-Kurve</h4>
+                                <p>
+                                    Die Ausgabe einer Bézier-Kurve wird mit Hilfe der Methode <code>bezierCurveTo()</code> erzielt. <br>
+                                    Die Methode benötigt sechs Parameter. Die ersten vier stellen jeweils die Koordinatenpaare für die Kontrollpunkte 1 und 2 dar. Die letzten Beiden definieren den Endpunkt der Kurve.
+                                </p>
+                                <h4>Quadratische Kurve</h4>
+                                <p>
+                                    Eine quadratische Kurve wird mit der Methode <code>quadraticCourveTo()</code> ausgegeben. <br>
+                                    Diese Methode verlangt lediglich vier Prameter, da diese nur über einen Kontrollpunkt verfügt. Dieser wird durch die ersten beiden Parameter repräsentiert. Der verbleibenden beiden stellen, wie zuvor bei <code>bezierCurveTo()</code> den Endpunkt der Kurve dar.
+                                </p>
                             </details>
                         </div>
 
@@ -254,12 +275,7 @@
                         </div>
                         
                         <div class="infoBox">
-                            <details>
-                                <summary>
-
-                                </summary>
-                                
-                            </details>
+                            
                         </div>
 
                     </article>
