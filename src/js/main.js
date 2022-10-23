@@ -235,7 +235,7 @@ function drawBspl1e(canvas) {
     context.stroke();
     context.closePath();
 
-    // Zeichne abgerundeten Pfad
+    // Zeichne Fläche mit Rundungen
     context.beginPath();
     context.moveTo(100, 25);
     context.lineTo(250, 25);
@@ -246,6 +246,32 @@ function drawBspl1e(canvas) {
     context.arc(250, 75, 25, 0, 3.5 * Math.PI, true);
     context.lineTo(100, 50);
     context.fill();
+    context.closePath();
+    context.save();
+
+    // Zeichne Bézier-Kurve
+    context.strokeStyle = 'hsl(20, 100%, 50%)';
+    context.lineWidth = 4;
+    context.beginPath();
+    context.moveTo(25, 275);
+    context.lineTo(75, 275);
+    // context.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+    context.bezierCurveTo(250, 275, 25, 225, 200, 225);
+    //  - - - - -    
+    context.lineTo(250, 225);
+    context.stroke();
+    context.closePath();
+
+    // Zeichne quadratische Kurve
+    context.strokeStyle = 'hsl(120, 100%, 50%)';
+    context.lineWidth = 4;
+    context.beginPath();
+    context.moveTo(375, 25);
+    context.lineTo(375, 50);
+    // context.quadraticCurveTo(cpx, cpy, endX, endY);
+    context.quadraticCurveTo(375, 400, 300, 275);
+    context.quadraticCurveTo(200, 100, 100, 100);
+    context.stroke();
     context.closePath();
 }
 
