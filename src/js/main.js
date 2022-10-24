@@ -331,9 +331,9 @@ function drawBspl1fKoordSystem(canvas) {
     ctx.translate(30, 0);
     ctx.beginPath();
     // x
-    for(let i = 10; i <= 475; i += 10) {
+    for(let i = 10; i <= 450; i += 10) {
         ctx.moveTo(i, 150);
-        if(i % 100 == 0) {
+        if(i % 20 == 0) {
             ctx.lineTo(i, 160);    
         } else {
             ctx.lineTo(i, 155);
@@ -349,26 +349,25 @@ function drawBspl1fKoordSystem(canvas) {
     ctx.fillText('V', 5, 15);
     ctx.fillText('100', 1, 45);
     ctx.fillText('50', 1, 95);
-    ctx.fillText('s', 477, 155);
-    ctx.fillText('0,5', 225, 165);
-    ctx.fillText('1', 430, 165);
+    ctx.fillText('s', 477, 160);
+    ctx.fillText('0,5', 222, 165);
+    ctx.fillText('1', 427, 165);
 }
 
 // Graph Zeichnen
-let endFreqPoint = 0;
-let freqInit = document.querySelector('#freqSlider').value;
-let ampInit = document.querySelector('#ampSlider').value;
-function drawBspl1fDrawGraph(canvas, amp=ampInit, freq=freqInit) {
+let curveEndPointX = 0;
+function drawBspl1fDrawGraph(canvas, amp=document.querySelector('#ampSlider').value, freq=document.querySelector('#freqSlider').value) {
     let step = 100 / freq;
-    let ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, 500, 300);
     drawBspl1fKoordSystem(canvas);
     ctx.save()
     ctx.translate(30 , 150);
     
-    const interval = 1 | Math.floor (400 / endFreqPoint);
+    const interval = (2 | Math.floor (600 / curveEndPointX));
+    console.log(interval);
 
-    for(let i = 0; i < interval+1; i++) {
+    for(let i = 0; i < interval; i++) {
         ctx.beginPath();
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 2;
@@ -377,8 +376,8 @@ function drawBspl1fDrawGraph(canvas, amp=ampInit, freq=freqInit) {
         ctx.quadraticCurveTo(step * 3, amp * 2, step * 4, 0);
         ctx.stroke();
         ctx.closePath();
-        endFreqPoint = step * 4;
-        ctx.translate(endFreqPoint, 0);
+        curveEndPointX = step * 4;
+        ctx.translate(curveEndPointX, 0);
     }
     
     ctx.restore();
