@@ -356,12 +356,9 @@ function drawBspl1fKoordSystem(canvas) {
 
 // Graph Zeichnen
 let endFreqPoint = 0;
-let freqBackup = 1;
-let ampBackup = 50;
-function drawBspl1fDrawGraph(canvas, amp=ampBackup, freq=freqBackup) {
-    freqBackup = freq;
-    ampBackup = amp;
-
+let freqInit = document.querySelector('#freqSlider').value;
+let ampInit = document.querySelector('#ampSlider').value;
+function drawBspl1fDrawGraph(canvas, amp=ampInit, freq=freqInit) {
     let step = 100 / freq;
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, 500, 300);
