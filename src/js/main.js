@@ -26,10 +26,17 @@ function initContent() {
 
     document.querySelector('#stopBspl1dAnim').addEventListener('click', stopAnimBspl1d);
 
+    const freqSlider = document.querySelector('#freqSlider');
+    const ampSlider = document.querySelector('#ampSlider');
 
-    document.querySelector('#freqSlider').addEventListener('input', e => {
+    freqSlider.addEventListener('input', e => {
         document.querySelector('#freqDisp').value = `${e.target.value} Hz`;
-        drawBspl1fDrawGraph(bspl1fCanvas, 150, parseFloat(e.target.value));
+        drawBspl1fDrawGraph(bspl1fCanvas, parseFloat(ampSlider.value), parseFloat(e.target.value));
+    });
+
+    ampSlider.addEventListener('input', e => {
+        document.querySelector('#ampDisp').value = `${e.target.value} V`;
+        drawBspl1fDrawGraph(bspl1fCanvas, parseFloat(e.target.value), parseFloat(freqSlider.value));
     });
 
 
@@ -332,9 +339,13 @@ function drawBspl1fKoordSystem(canvas) {
 
 // Graph Zeichnen
 let endFreqPoint = 0;
-function drawBspl1fDrawGraph(canvas, amp=150, freq=1) {
+let freqBackup = 1;
+let ampBackup = 50;
+function drawBspl1fDrawGraph(canvas, amp=ampBackup, freq=freqBackup) {
+    freqBackup = freq;
+    ampBackup = amp;
+
     let step = 100 / freq;
-    
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, 500, 300);
     drawBspl1fKoordSystem(canvas);
