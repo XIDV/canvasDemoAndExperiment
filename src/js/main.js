@@ -28,7 +28,7 @@ function initContent() {
 
 
     document.querySelector('#freqSlider').addEventListener('input', e => {
-        document.querySelector('#freqDisp').value = e.target.value;
+        document.querySelector('#freqDisp').value = `${e.target.value} Hz`;
         drawBspl1fDrawGraph(bspl1fCanvas, 150, parseFloat(e.target.value));
     });
 
@@ -301,18 +301,19 @@ function drawBspl1fKoordSystem(canvas) {
     ctx.stroke();
     // Zeichne x-Achse
     ctx.moveTo(5, 150);
-    ctx.lineTo(395, 150)
+    ctx.lineTo(495, 150)
     ctx.stroke();
     // zeichne Achsenmarkierungen
+    // y
     for(let i = 30; i <= 270; i += 10) {
         ctx.moveTo(25, i);
         ctx.lineTo(30, i);
         ctx.stroke();
     }
-    
-    for(let i = 40; i <= 375; i += 10) {
+    // x
+    for(let i = 40; i <= 475; i += 10) {
         ctx.moveTo(i, 150);
-        if(i == 130 || i == 230 || i == 330) {
+        if(i == 130 || i == 230 || i == 330 || i == 430) {
             ctx.lineTo(i, 160);    
         } else {
             ctx.lineTo(i, 155);
@@ -324,30 +325,39 @@ function drawBspl1fKoordSystem(canvas) {
     ctx.font = '1rem sans-serif';
     ctx.textBaseline = 'top';
     ctx.fillText('V', 5, 15);
-    ctx.fillText('Hz', 377, 155);
+    ctx.fillText('s', 477, 155);
+    ctx.fillText('0,5', 220, 165);
+    ctx.fillText('1', 425, 165);
 }
 
 // Graph Zeichnen
+let endFreqPoint = 0;
 function drawBspl1fDrawGraph(canvas, amp=150, freq=1) {
-    let step = Math.sqrt(200 / freq);
-    console.log(step);
-
-
+    let step = 100 / freq;
+    
     let ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 400, 300);
+    ctx.clearRect(0, 0, 500, 300);
     drawBspl1fKoordSystem(canvas);
     ctx.save()
-    ctx.translate(30, 150);
-    ctx.beginPath();
-    ctx.strokeStyle = 'red';
-    ctx.lineWidth = 2;
-    ctx.moveTo(0, 0);
-    // ctx.quadraticCurveTo(cpx, cpy, endX, endY);
-    ctx.quadraticCurveTo(step, -(amp * 1.5), step * 2, 0);
-    ctx.quadraticCurveTo(step * 3, amp * 1.5, step * 4, 0);
-    // ctx.quadraticCurveTo()
-    ctx.stroke();
-    ctx.closePath();
+    ctx.translate(30 , 150);
+    
+    const interval = 1 | Math.floor (400 / endFreqPoint);
+
+    for(let i = 0; i < interval+1; i++) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        ctx.moveTo(0, 0);
+        // ctx.quadraticCurveTo(cpx, cpy, endX, endY);
+        ctx.quadraticCurveTo(step, -(amp * 1.5), step * 2, 0);
+        ctx.quadraticCurveTo(step * 3, amp * 1.5, step * 4, 0);
+        // ctx.quadraticCurveTo()
+        ctx.stroke();
+        ctx.closePath();
+        endFreqPoint = step * 4;
+        ctx.translate(endFreqPoint, 0);
+    }
+    
     ctx.restore();
 }
 
