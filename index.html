@@ -286,11 +286,61 @@
                                     </div>
                                 </fieldset>
                             </form>
-
+                            
                         </div>
                         
                         <div class="infoBox">
-                            
+                            <details>
+                                <summary>
+                                    Ausgabe einer Darstellung einer Wechselspannung in einem Koordinatensystem und Einstellungsmöglichkeiten der Werte für Volt(V) und Frequenz(Hz).
+                                </summary>
+                                <p>
+                                    Einstiegspunkt ist, sowohl bei der Initialisierung, als auch bei Abfrage von <code>input</code>-Events für die Slider zur Einstellung v. Amplitude (<code>ampSlider</code>) und Frequenz (<code>freqSlider</code>) die Funktion <code>drawBspl1fDrawGraph()</code>. Diese ist für die Darstellung des Graphen zustädig. Außerdem erfolgt hierüber der Aufruf d. Funktion <code>drawBspl1fKoordSystem()</code> welche die Ausgabe des Koordinatensystems übernimmt.
+                                </p>
+                                <h4>Die Funktion <code>drawBspl1fDrawGraph()</code></h4>
+                                <p>
+                                    Die Funktion benötigt drei Parameter.
+                                </p>
+                                <ul>
+                                    <li>Das Canvas-Element, hier <code>bspl1fCanvas</code> ...</li>
+                                    <li>und je einen Wert für die Amplitude (<code>amp</code>) und die Frequenz (<code>freq</code>).</li>
+                                </ul>
+                                <p>
+                                    Da bem laden der Seite, d. h. beim initialen Aufruf d. Funktion noch keine (vom User definierten) Werte vorliegen, werden die <code>value</code>-Werte der Eingabeslider als Default-Werte verwendet.
+                                </p>
+                                <p>
+                                    Im ersten Schritt wird die Schrittweite (<code>step</code>) berechnet. Diese ist der Quotient aus der Länge einer <strong>halben</strong> 1 Hz-Welle (100) auf dem Canvas-Element und dem Wert von <code>freq</code>, also der eingestellten Frequenz.
+                                </p>
+                                <p>
+                                    Die Konstante <code>ctx</code> f. den CanvasRenderingContext2D wird deklariert und initialisiert. Zudem wird mit mit <code>clearRect()</code> der Canvas für eine neue Zeichnung vorbereitet.
+                                </p>
+                                <p>
+                                    Mit dem Aufruf d. Funktion <code>drawBspl1fKoordSystem()</code> wird das Koordinatensystem auf den Canvas gezeichnet. (s. nächster Abschnitt)
+                                </p>
+                                <p>
+                                    Nach der Sicherung des CanvasRenderingContext2D mittels <code>save()</code> wird dessen Ursprung mit <code>translate()</code> auf den Ursprung des zuvor generierten Koordinatensystems gesetzt. Nun kann mit dem Zeichnen des Graphen begonnen werden.
+                                </p>
+                                <p>
+                                    Aufgrund der Tatsache, dass sich die Kruve bei ansteigender Frequenz in x-Richtung zusammenzieht, muss dafür gesorgt werden, dass sich diese wiederholt um den zur Verfügung stehenden Platz auszufüllen. <br>
+                                    Um diesem Problem zu begegnen wird die Konstante <code>interval</code> deklariert und initialisiert. Entweder mit dem Wert 2, oder mit dem Quotienten aus einem fixen Wert (600) und dem Wert der globalen Hilfsvariablen <code>curveEndPoint</code> welcher die Gesamtlaufweite der Kurve definiert. Entsprechend dem, auf eine Ganzzahl gerundeten Wert von <code>interval</code> werden die folgenden Anweisungen oft wiederholt.
+                                </p>
+                                <p>
+                                    Die Darstellung der Sinuskurve wird im Folgenden durch Verwendung der Methode <code>quadraticCourveTo()</code> realisiert. Für die Darstellung werden zwei dieser Kurven benötigt. Eine f. d. positiven Bereich der Welle, die Andere f. den negativen Bereich. <br>
+                                    Die Anweisungen zur Ausgabe der Kurve sind weitestgehend selbsterklärend. <br>
+                                    Am Ende der <code>for</code>-Schleife wird in einem ersten Schritt die Variable <code>curveEndPoint</code>, entsprechend der neu berechneten Gesamtlaufweite der Welle, aktualisiert. <br>
+                                    Im zweiten Schritt wird wird der CanvasRenderingContext2D um eben diesn Wert in x-Richtung verschoben. Somit wird bei einem weiteren Schleifendurchlauf eine neue Welle exakt an das Ende vorausgegangenen angefügt.
+                                </p>
+                                <h4>Die Funktion <code>drawBspl1fKoordSystem()</code></h4>
+                                <p>
+                                    Diese Funktion zeichnet das Koordinatensystem (Achsen, Beschriftungen, Markierungn) auf den Canvas. <br>
+                                    Die Generierung der Markierungen wird jeweils für x- und y-Achse sepearat innerhalb von Schleifen realisiert. Im Fall der Markierungen f. d. x-Achse wird der CanvasRenderingContext2D temporär auf den Koordiantenursprung verschoben.
+                                </p>
+                                <h4>EventListener für Eingabeslider</h4>
+                                <p>
+                                    Hier kommen EventListener vom Typ <code>input</code> zum Einsatz um unmittelbar auf Eingaben reagieren zu können. <br>
+                                    Einerseits werden die jeweiligen Anzeige-Elemente <code>#freqDisp</code> und <code>#ampDisp</code> bzgl. deren <code>value</code>-Eigenschaften modifiziert, andererseits erfolgt jeweils der Aufruf der Funktion <code>drawBspl1fDrawGraph()</code> mit den entsprechenden Parametern.
+                                </p>
+                            </details>
                         </div>
 
                     </article>
