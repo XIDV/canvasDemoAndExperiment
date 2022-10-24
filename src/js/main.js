@@ -310,10 +310,13 @@ function drawBspl1fKoordSystem(canvas) {
     ctx.moveTo(5, 150);
     ctx.lineTo(495, 150)
     ctx.stroke();
+    ctx.closePath()
+
+    ctx.beginPath();
     // zeichne Achsenmarkierungen
     // y
     for(let i = 30; i <= 270; i += 10) {
-        if(i == 100 || i == 200 || i == 50 || i == 250) {
+        if(i % 50 == 0) {
             ctx.moveTo(20, i);
             ctx.lineTo(30, i);    
         } else {
@@ -322,10 +325,15 @@ function drawBspl1fKoordSystem(canvas) {
         }
         ctx.stroke();
     }
+    ctx.closePath()
+    ctx.save()
+
+    ctx.translate(30, 0);
+    ctx.beginPath();
     // x
-    for(let i = 40; i <= 475; i += 10) {
+    for(let i = 10; i <= 475; i += 10) {
         ctx.moveTo(i, 150);
-        if(i == 130 || i == 230 || i == 330 || i == 430) {
+        if(i % 100 == 0) {
             ctx.lineTo(i, 160);    
         } else {
             ctx.lineTo(i, 155);
@@ -333,6 +341,8 @@ function drawBspl1fKoordSystem(canvas) {
         ctx.stroke();
     }
     ctx.closePath();
+
+    ctx.restore();
     // Zeichne Achsenbeschriftungen
     ctx.font = '.75rem sans-serif';
     ctx.textBaseline = 'top';
@@ -366,10 +376,8 @@ function drawBspl1fDrawGraph(canvas, amp=ampBackup, freq=freqBackup) {
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 2;
         ctx.moveTo(0, 0);
-        // ctx.quadraticCurveTo(cpx, cpy, endX, endY);
         ctx.quadraticCurveTo(step, -(amp * 2), step * 2, 0);
         ctx.quadraticCurveTo(step * 3, amp * 2, step * 4, 0);
-        // ctx.quadraticCurveTo()
         ctx.stroke();
         ctx.closePath();
         endFreqPoint = step * 4;
