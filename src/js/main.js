@@ -20,7 +20,6 @@ function initContent() {
         drawBspl1c();
         requestID = window.requestAnimationFrame(redrawBspl1d);
         drawBspl1e(bspl1eCanvas);
-
         drawBspl1fDrawGraph(bspl1fCanvas);
     }
 
@@ -50,8 +49,8 @@ function initContent() {
     const resetCanvasButton = document.querySelector('#resetBspl1g');
 
     const brush = {
-        size: 5,
-        color: 'black'
+        size: 0,
+        color: ''
     }
     
     setBrush(parseInt(brushSizeSlider.value), brushColorSelector.value);
@@ -76,22 +75,29 @@ function initContent() {
 
     let activeMouse = false;
     bspl1gCanvas.addEventListener('mousedown', e => {
+        xPos = e.offsetX;
+        yPos = e.offsetY;
         activeMouse = true;
     });
+
     bspl1gCanvas.addEventListener('mouseup', e => {
+        xPos = 0;
+        yPos = 0;
         activeMouse = false;
     });
+
     bspl1gCanvas.addEventListener('mousemove', e => {
         if(activeMouse) {
-            const ctx = e.target.getContext('2d');
-            const pos = getMousePos1g(e.target, e);
+            const ctx = bspl1gCanvas.getContext('2d');
             ctx.fillStyle = brush.color;
-            ctx.fillRect(pos.x, pos.y, brush.size, brush.size);
-        }    
+            ctx.beginPath();
+            ctx.arc(e.offsetX, e.offsetY, brush.size, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+        }
     });
-
-
     
+
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -434,15 +440,6 @@ function drawBspl1fDrawGraph(canvas, amp=document.querySelector('#ampSlider').va
     }
     
     ctx.restore();
-}
-
-
-function getMousePos1g(canvas, evt) {
-    let rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    }
 }
 
 

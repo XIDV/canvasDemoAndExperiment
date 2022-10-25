@@ -348,7 +348,7 @@
                     <article class="demoBox" id="bsplOneG">
                         <header class="demoBoxHeader">
                             <h3 class="artTitle">Beispiel G</h3>
-                            <div class="artSubtitle">Dynamische Anpassung grafischer Elemente in Kombination mit MouseEvents</div>
+                            <div class="artSubtitle">Dynamische Anpassung grafischer Elemente in Kombination mit MouseEvents (1)</div>
                         </header>
                         <div class="sandboxContainer">
 
@@ -378,11 +378,28 @@
                         <div class="infoBox">
                             <details>
                                 <summary>
-                                    
+                                    Malen auf dem Canvas
                                 </summary>
-                                <p>
+                                <ul>
+                                    <li>Die Eingabe-Elemente <code>#brushSize</code>, <code>#brushColor</code> und <code>#resetButton</code> werden in entsprechende Kontstanten gesichert.</li>
                                     
-                                </p>
+                                    <li>Das Objekt <code>brush</code> verfügt über die Attribute <code>size</code> und <code>color</code> deren Werte die Pinselstärke und die Farbe repräsentieren.</li>
+                                    
+                                    <li>Durch Aufruf der Funktion <code>setBrush()</code> werden die Attribute von <code>brush</code> beim laden der Seite initialisiert.</li>
+                                    
+                                    <li>Es folgen die beiden EventListener für die Verarbeitung von Eingaben über die Elemente <code>#brushSize</code>, <code>#brushColor</code> und <code>#resetButton</code>. <br>
+                                    Über die ersten Beiden werden entsprchend die Attribute von <code>brush</code> während der Laufzeit manipuliert, über den dritten EventListener werden bestehende Inhalte des Canvas gelöscht.</li>
+                                    
+                                    <li>Mit Hilfe der Hilfsvariablen <code>activeMouse</code> in Verbindung mit zwei EventListenern vom Typ <code>'mousedown'</code>, bzw. <code>'mouseup'</code> wird sichergestellt, dass nur auf den Canvas gezeichnet wird, wenn mindestens eine der Maustasten gehalten wird.</li>
+                                    <li>Ein weiterer EventListener vom Typ <code>'mousemove'</code> realisiert letztendlich das Aufbringen von Grafik auf den Canvas. <br>
+                                    <ul>
+                                        <li>Zuerst wird geprüft ob der Wert von <code>activeMouse</code> gleich <code>true</code> ist.</li>
+                                        <li>Wenn dies der Fall ist wird der CanvasRenderingContext2D in der Konstanten <code>ctx</code> gesichtert.</li>
+                                        
+                                        <!-- TODO!!! neu schreiben -->
+
+                                    </ul></li>
+                                </ul>
                                 
                             </details>
                         </div>
