@@ -365,7 +365,6 @@ function drawBspl1fDrawGraph(canvas, amp=document.querySelector('#ampSlider').va
     ctx.translate(30 , 150);
     
     const interval = (2 | Math.floor (600 / curveEndPointX));
-    console.log(interval);
 
     for(let i = 0; i < interval; i++) {
         ctx.beginPath();
