@@ -47,6 +47,7 @@ function initContent() {
 
     const brushSizeSlider = document.querySelector('#brushSize');
     const brushColorSelector = document.querySelector('#brushColor');
+    const resetCanvasButton = document.querySelector('#resetBspl1g');
 
     const brush = {
         size: 5,
@@ -66,6 +67,11 @@ function initContent() {
 
     brushColorSelector.addEventListener('input', e => {
         setBrush(parseInt(brushSizeSlider.value), e.target.value);
+    });
+
+    resetCanvasButton.addEventListener('click', e => {
+        const ctx = bspl1gCanvas.getContext('2d');
+        ctx.clearRect(0, 0, 500, 300);
     });
 
     let activeMouse = false;
