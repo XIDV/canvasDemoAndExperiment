@@ -11,8 +11,8 @@ function initContent() {
     const bspl1dCanvas = document.querySelector('#bspl1dCanvas');
     let requestID = undefined;
     const bspl1eCanvas = document.querySelector('#bspl1eCanvas');
-
     const bspl1fCanvas = document.querySelector('#bspl1fCanvas');
+    const bspl1gCanvas = document.querySelector('#bspl1gCanvas');
 
     if (bspl1aCanvas.getContext) {
         drawBspl1a(bspl1aCanvas);
@@ -26,9 +26,12 @@ function initContent() {
 
     document.querySelector('#stopBspl1dAnim').addEventListener('click', stopAnimBspl1d);
 
+    
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
     const freqSlider = document.querySelector('#freqSlider');
     const ampSlider = document.querySelector('#ampSlider');
-
     freqSlider.addEventListener('input', e => {
         document.querySelector('#freqDisp').value = `${e.target.value} Hz`;
         drawBspl1fDrawGraph(bspl1fCanvas, parseFloat(ampSlider.value), parseFloat(e.target.value));
@@ -38,7 +41,52 @@ function initContent() {
         document.querySelector('#ampDisp').value = `${e.target.value} V`;
         drawBspl1fDrawGraph(bspl1fCanvas, parseFloat(e.target.value), parseFloat(freqSlider.value));
     });
+    
+    
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+    const brushSizeSlider = document.querySelector('#brushSize');
+    const brushColorSelector = document.querySelector('#brushColor');
+
+    const brush = {
+        size: 5,
+        color: 'black'
+    }
+    
+    setBrush(parseInt(brushSizeSlider.value), brushColorSelector.value);
+    function setBrush(size, color) {
+        brush.size = size;
+        brush.color = color;
+    }
+
+    brushSizeSlider.addEventListener('input', e => {
+        document.querySelector('#sizeDisp').value = `${e.target.value} Px`;
+        setBrush(parseInt(e.target.value), brushColorSelector.value);
+    });
+
+    brushColorSelector.addEventListener('input', e => {
+        setBrush(parseInt(brushSizeSlider.value), e.target.value);
+    });
+
+    let activeMouse = false;
+    bspl1gCanvas.addEventListener('mousedown', e => {
+        activeMouse = true;
+    });
+    bspl1gCanvas.addEventListener('mouseup', e => {
+        activeMouse = false;
+    });
+    bspl1gCanvas.addEventListener('mousemove', e => {
+        if(activeMouse) {
+            const ctx = e.target.getContext('2d');
+            const pos = getMousePos1g(e.target, e);
+            ctx.fillStyle = brush.color;
+            ctx.fillRect(pos.x, pos.y, brush.size, brush.size);
+        }    
+    });
+
+
+    
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
     function stopAnimBspl1d() {
@@ -380,6 +428,15 @@ function drawBspl1fDrawGraph(canvas, amp=document.querySelector('#ampSlider').va
     }
     
     ctx.restore();
+}
+
+
+function getMousePos1g(canvas, evt) {
+    let rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    }
 }
 
 
