@@ -44,59 +44,75 @@ function initContent() {
     
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    const brushSizeSlider = document.querySelector('#brushSize');
-    const brushColorSelector = document.querySelector('#brushColor');
-    const resetCanvasButton = document.querySelector('#resetBspl1g');
 
-    const brush = {
-        size: 0,
-        color: ''
-    }
-    
-    setBrush(parseInt(brushSizeSlider.value), brushColorSelector.value);
-    function setBrush(size, color) {
-        brush.size = size;
-        brush.color = color;
-    }
+    const paintApp = {
+        // Properties
+        brushSettings: document.querySelector('#brushSettings'),
+        paintCanvas: document.querySelector('#bspl1gCanvas'),
+        ctx: undefined,
+        brush: {
+            brushSize: 5,
+            brushColor: '#000000',
+        },
+        isPainting: false,
+        
+        // Methodes
+        setBrushSize(value) {
+            this.brush.brushSize = value;
+        },
+        
+        setBrushColor(value) {
+            this.brush.brushColor = value;
+        },
+        
+        setIsPainting() {
+            this.isPainting = !this.isPainting;
+            console.log(this.isPainting);
+        },
 
-    brushSizeSlider.addEventListener('input', e => {
-        document.querySelector('#sizeDisp').value = `${e.target.value} Px`;
-        setBrush(parseInt(e.target.value), brushColorSelector.value);
-    });
+        setCTX() {
+            console.log('Setting CTX')
+            this.ctx = this.paintCanvas.getContext('2d');
+        },
+        
+        drawOn(e) {
+            if(this.isPainting) {
+                this.ctx.fillStyle = this.brush.brushColor;
+                this.ctx.beginPath();
+                this.ctx.arc(e.offsetX, e.offsetY, this.brush.brushSize, 0, 2 * Math.PI);
+                this.ctx.fill();
+                this.ctx.closePath();
+            }
+        },
 
-    brushColorSelector.addEventListener('input', e => {
-        setBrush(parseInt(brushSizeSlider.value), e.target.value);
-    });
-
-    resetCanvasButton.addEventListener('click', e => {
-        const ctx = bspl1gCanvas.getContext('2d');
-        ctx.clearRect(0, 0, 500, 300);
-    });
-
-    let activeMouse = false;
-    bspl1gCanvas.addEventListener('mousedown', e => {
-        xPos = e.offsetX;
-        yPos = e.offsetY;
-        activeMouse = true;
-    });
-
-    bspl1gCanvas.addEventListener('mouseup', e => {
-        xPos = 0;
-        yPos = 0;
-        activeMouse = false;
-    });
-
-    bspl1gCanvas.addEventListener('mousemove', e => {
-        if(activeMouse) {
-            const ctx = bspl1gCanvas.getContext('2d');
-            ctx.fillStyle = brush.color;
-            ctx.beginPath();
-            ctx.arc(e.offsetX, e.offsetY, brush.size, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.closePath();
+        clearCanvas() {
+            // TODO
         }
+    }
+
+    paintApp.setCTX();
+
+    paintApp.brushSettings.addEventListener('input', e => {
+        paintApp[e.target.name](e.target.value);
     });
-    
+
+    paintApp.brushSettings.addEventListener('click', e => {
+        paintApp.clearCanvas();
+    });
+
+    paintApp.paintCanvas.addEventListener('mousedown', e => {
+        paintApp.setIsPainting();
+    });
+
+    paintApp.paintCanvas.addEventListener('mouseup', e => {
+        paintApp.setIsPainting();
+    });
+
+    paintApp.paintCanvas.addEventListener('mousemove', e => {
+        paintApp.drawOn(e);
+    });
+
+
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
