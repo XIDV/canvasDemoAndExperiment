@@ -50,6 +50,8 @@ function initContent() {
         brushSettings: document.querySelector('#brushSettings'),
         displayBrushSize: document.querySelector('#sizeDisp'),
         paintCanvas: document.querySelector('#bspl1gCanvas'),
+        xPos: 0,
+        yPos: 0,
         ctx: undefined,
         brush: {
             brushSize: 5,
@@ -68,9 +70,11 @@ function initContent() {
         },
         
         setIsPainting() {
+            this.ctx.beginPath();
             this.isPainting = !this.isPainting;
+            this.ctx.closePath();
         },
-
+        
         initPaintApp() {
             this.resizeCanvas();
             this.ctx = this.paintCanvas.getContext('2d');
@@ -80,14 +84,24 @@ function initContent() {
             this.paintCanvas.width = window.innerWidth * 60 / 100;
             this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
         },
+
+        setBrushPosition(pos) {
+            this.xPos = pos.x;
+            this.yPos = pos.y;
+        },
         
         drawOn(e) {
             if(this.isPainting) {
-                this.ctx.fillStyle = this.brush.brushColor;
-                this.ctx.beginPath();
-                this.ctx.arc(e.offsetX, e.offsetY, this.brush.brushSize, 0, 2 * Math.PI);
-                this.ctx.fill();
-                this.ctx.closePath();
+                this.ctx.strokeStyle = this.brush.brushColor;
+                this.ctx.lineWidth = this.brush.brushSize;
+                this.ctx.lineCap = 'round';
+                this.ctx.moveTo(this.xPos, this.yPos);
+                this.ctx.lineTo(e.offsetX, e.offsetY);                
+                this.ctx.stroke();
+                this.setBrushPosition({
+                    x: e.offsetX,
+                    y: e.offsetY
+                });
             }
         },
 
@@ -115,10 +129,18 @@ function initContent() {
 
     paintApp.paintCanvas.addEventListener('mousedown', e => {
         paintApp.setIsPainting();
+        paintApp.setBrushPosition({
+            x: e.offsetX,
+            y: e.offsetY
+        });
     });
 
     paintApp.paintCanvas.addEventListener('mouseup', e => {
         paintApp.setIsPainting();
+        paintApp.setBrushPosition({
+            x: 0,
+            y: 0
+        });
     });
 
     paintApp.paintCanvas.addEventListener('mousemove', e => {
