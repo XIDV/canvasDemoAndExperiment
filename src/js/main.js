@@ -48,6 +48,7 @@ function initContent() {
     const paintApp = {
         // Properties
         brushSettings: document.querySelector('#brushSettings'),
+        displayBrushSize: document.querySelector('#sizeDisp'),
         paintCanvas: document.querySelector('#bspl1gCanvas'),
         ctx: undefined,
         brush: {
@@ -55,10 +56,11 @@ function initContent() {
             brushColor: '#000000',
         },
         isPainting: false,
-        
+
         // Methodes
         setBrushSize(value) {
             this.brush.brushSize = value;
+            this.displayBrushSize.value = `${value} Px`;
         },
         
         setBrushColor(value) {
@@ -67,12 +69,16 @@ function initContent() {
         
         setIsPainting() {
             this.isPainting = !this.isPainting;
-            console.log(this.isPainting);
         },
 
-        setCTX() {
-            console.log('Setting CTX')
+        initPaintApp() {
+            this.resizeCanvas();
             this.ctx = this.paintCanvas.getContext('2d');
+        },
+
+        resizeCanvas() {
+            this.paintCanvas.width = window.innerWidth * 60 / 100;
+            this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
         },
         
         drawOn(e) {
@@ -86,18 +92,25 @@ function initContent() {
         },
 
         clearCanvas() {
-            // TODO
+            this.ctx.clearRect(0, 0, this.paintCanvas.width, this.paintCanvas.height);
         }
     }
 
-    paintApp.setCTX();
+    
+    paintApp.initPaintApp();
 
+    window.addEventListener('resize', e => {
+        paintApp.resizeCanvas();    
+    });
+    
     paintApp.brushSettings.addEventListener('input', e => {
         paintApp[e.target.name](e.target.value);
     });
 
     paintApp.brushSettings.addEventListener('click', e => {
-        paintApp.clearCanvas();
+        if(e.target.id == 'resetBspl1g') {
+            paintApp.clearCanvas();
+        }
     });
 
     paintApp.paintCanvas.addEventListener('mousedown', e => {
