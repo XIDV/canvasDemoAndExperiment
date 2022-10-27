@@ -52,6 +52,7 @@ function initContent() {
         paintCanvas: document.querySelector('#bspl1gCanvas'),
         xPos: 0,
         yPos: 0,
+        contentBackup: undefined,
         ctx: undefined,
         brush: {
             brushSize: 5,
@@ -76,13 +77,26 @@ function initContent() {
         },
         
         initPaintApp() {
-            this.resizeCanvas();
+            this.contentBackup = new Image();
             this.ctx = this.paintCanvas.getContext('2d');
+            this.resizeCanvas();
         },
-
+        
         resizeCanvas() {
+            // this.contentBackup.src = this.paintCanvas.toDataURL();
+            let backup;
+            if(this.ctx) {
+                backup = this.ctx.getImageData(0, 0, this.paintCanvas.width, this.paintCanvas.height);
+            }
+
             this.paintCanvas.width = window.innerWidth * 60 / 100;
             this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
+            
+            if(this.ctx) {
+                // this.ctx.drawImage(this.contentBackup, 0, 0, this.paintCanvas.width, this.paintCanvas.height);
+                this.ctx.putImageData(backup, 0, 0);
+            }
+            // this.contentBackup.src = this.paintCanvas.toDataURL();
         },
 
         setBrushPosition(pos) {
