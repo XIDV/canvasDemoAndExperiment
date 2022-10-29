@@ -50,15 +50,17 @@ function initContent() {
         brushSettings: document.querySelector('#brushSettings'),
         displayBrushSize: document.querySelector('#sizeDisp'),
         paintCanvas: document.querySelector('#bspl1gCanvas'),
+        backupCanvas: document.createElement('canvas'),
         xPos: 0,
         yPos: 0,
-        contentBackup: undefined,
         ctx: undefined,
         brush: {
             brushSize: 5,
             brushColor: '#000000',
         },
         isPainting: false,
+        repaintTimeoutID: false,
+        repaintTimeoutDelay: 500,
 
         // Methodes
         setBrushSize(value) {
@@ -80,23 +82,15 @@ function initContent() {
             this.contentBackup = new Image();
             this.ctx = this.paintCanvas.getContext('2d');
             this.resizeCanvas();
+            this.backupCanvasWidth = this.paintCanvas.width;
         },
         
         resizeCanvas() {
-            // this.contentBackup.src = this.paintCanvas.toDataURL();
-            let backup;
-            if(this.ctx) {
-                backup = this.ctx.getImageData(0, 0, this.paintCanvas.width, this.paintCanvas.height);
-            }
+            clearTimeout(paintApp.repaintTimeoutID);
+            this.repaintTimeoutID = setTimeout(() => {
+                // todo: neu machen ....
 
-            this.paintCanvas.width = window.innerWidth * 60 / 100;
-            this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
-            
-            if(this.ctx) {
-                // this.ctx.drawImage(this.contentBackup, 0, 0, this.paintCanvas.width, this.paintCanvas.height);
-                this.ctx.putImageData(backup, 0, 0);
-            }
-            // this.contentBackup.src = this.paintCanvas.toDataURL();
+            }, this.repaintTimeoutDelay);
         },
 
         setBrushPosition(pos) {
@@ -128,8 +122,8 @@ function initContent() {
     paintApp.initPaintApp();
 
     window.addEventListener('resize', e => {
-        paintApp.resizeCanvas();    
-    });
+        paintApp.resizeCanvas();
+    },);
     
     paintApp.brushSettings.addEventListener('input', e => {
         paintApp[e.target.name](e.target.value);
