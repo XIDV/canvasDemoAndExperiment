@@ -50,13 +50,18 @@ function initContent() {
         brushSettings: document.querySelector('#brushSettings'),
         displayBrushSize: document.querySelector('#sizeDisp'),
         paintCanvas: document.querySelector('#bspl1gCanvas'),
-        backupCanvas: document.createElement('canvas'),
+        currentCWidth: 0,
+        currentCHeight: 0,
         xPos: 0,
         yPos: 0,
         ctx: undefined,
         brush: {
             brushSize: 5,
             brushColor: '#000000',
+        },
+        scaleFactors: {
+            x: undefined,
+            y: undefined
         },
         isPainting: false,
         repaintTimeoutID: false,
@@ -80,17 +85,54 @@ function initContent() {
         
         initPaintApp() {
             this.contentBackup = new Image();
+            this.currentCWidth = this.paintCanvas.width = window.innerWidth * 60 / 100;
+            this.currentCHeight = this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
+            this.setCurrentDimensions({
+                w: this.paintCanvas.width,
+                h: this.paintCanvas.height
+            });
             this.ctx = this.paintCanvas.getContext('2d');
-            this.resizeCanvas();
-            this.backupCanvasWidth = this.paintCanvas.width;
         },
         
         resizeCanvas() {
-            clearTimeout(paintApp.repaintTimeoutID);
-            this.repaintTimeoutID = setTimeout(() => {
-                // todo: neu machen ....
 
-            }, this.repaintTimeoutDelay);
+            // clearTimeout(this.repaintTimeoutID);
+            
+            // this.repaintTimeoutID = setTimeout(() => {
+                const currentISmgData = this.ctx.getImageData(0, 0, this.currentCWidth, this.currentCHeight);
+                
+                
+                this.paintCanvas.width = window.innerWidth * 60 / 100;
+                this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
+
+                if(this.currentCWidth < this.paintCanvas.width) {
+                    this.scaleFactors = {
+                        x: this.currentCWidth / this.paintCanvas.width,
+                        y: this.currentCHeight / this.paintCanvas.height
+                    }
+                } else {
+                    this.scaleFactors = {
+                        x: this.paintCanvas.width / this.currentCWidth,
+                        y: this.paintCanvas.height / this.currentCHeight
+                    }
+                }
+                
+                const scaledData = this.getScaledContent(currentISmgData, this.scaleFactors);
+
+                this.ctx.putImageData(scaledData, 0, 0);
+
+                this.setCurrentDimensions({
+                    w: this.paintCanvas.width,
+                    h: this.paintCanvas.height
+                });
+                
+            // }, this.repaintTimeoutDelay);
+
+        },
+
+        setCurrentDimensions(dimensions) {
+            this.currentCWidth = dimensions.w;
+            this.currentCHeight = dimensions.h;
         },
 
         setBrushPosition(pos) {
@@ -115,7 +157,32 @@ function initContent() {
 
         clearCanvas() {
             this.ctx.clearRect(0, 0, this.paintCanvas.width, this.paintCanvas.height);
+        },
+
+        getScaledContent(imgData, scaleFactors) {
+            console.log(scaleFactors);
+
+            let newCanvas = document.createElement('canvas');
+            newCanvas.setAttribute('width', this.currentCWidth);
+            newCanvas.setAttribute('height', this.currentCHeight);
+            let newCTX = newCanvas.getContext('2d');
+            newCTX.putImageData(imgData, 0, 0);
+            
+
+            let scaleCanvas = document.createElement('canvas');
+            scaleCanvas.setAttribute('width', this.currentCWidth);
+            scaleCanvas.setAttribute('height', this.currentCHeight);
+            let scaleCTX = scaleCanvas.getContext('2d');
+
+            scaleCTX.scale(scaleFactors.x, scaleFactors.y);
+            scaleCTX.drawImage(newCanvas, 0, 0);
+
+            let scaledImgData = scaleCTX.getImageData(0, 0, scaleCanvas.width, scaleCanvas.height);
+
+            return scaledImgData;
+
         }
+
     }
 
     
