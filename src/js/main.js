@@ -64,8 +64,8 @@ function initContent() {
             y: undefined
         },
         isPainting: false,
-        repaintTimeoutID: false,
-        repaintTimeoutDelay: 500,
+        // repaintTimeoutID: false,
+        // repaintTimeoutDelay: 500,
 
         // Methodes
         setBrushSize(value) {
