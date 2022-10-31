@@ -64,8 +64,6 @@ function initContent() {
             y: undefined
         },
         isPainting: false,
-        // repaintTimeoutID: false,
-        // repaintTimeoutDelay: 500,
 
         // Methodes
         setBrushSize(value) {
@@ -84,9 +82,9 @@ function initContent() {
         },
         
         initPaintApp() {
-            this.contentBackup = new Image();
-            this.currentCWidth = this.paintCanvas.width = window.innerWidth * 60 / 100;
-            this.currentCHeight = this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
+            
+            this.paintCanvas.width = window.innerWidth * 60 / 100;
+            this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
             this.setCurrentDimensions({
                 w: this.paintCanvas.width,
                 h: this.paintCanvas.height
@@ -95,39 +93,31 @@ function initContent() {
         },
         
         resizeCanvas() {
-
-            // clearTimeout(this.repaintTimeoutID);
+            const currentISmgData = this.ctx.getImageData(0, 0, this.currentCWidth, this.currentCHeight);
             
-            // this.repaintTimeoutID = setTimeout(() => {
-                const currentISmgData = this.ctx.getImageData(0, 0, this.currentCWidth, this.currentCHeight);
-                
-                
-                this.paintCanvas.width = window.innerWidth * 60 / 100;
-                this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
+            this.paintCanvas.width = window.innerWidth * 60 / 100;
+            this.paintCanvas.height = this.paintCanvas.width / 3 * 2;
 
-                if(this.currentCWidth < this.paintCanvas.width) {
-                    this.scaleFactors = {
-                        x: this.currentCWidth / this.paintCanvas.width,
-                        y: this.currentCHeight / this.paintCanvas.height
-                    }
-                } else {
-                    this.scaleFactors = {
-                        x: this.paintCanvas.width / this.currentCWidth,
-                        y: this.paintCanvas.height / this.currentCHeight
-                    }
+            if(this.currentCWidth < this.paintCanvas.width) {
+                this.scaleFactors = {
+                    x: this.currentCWidth / this.paintCanvas.width,
+                    y: this.currentCHeight / this.paintCanvas.height
                 }
-                
-                const scaledData = this.getScaledContent(currentISmgData, this.scaleFactors);
+            } else {
+                this.scaleFactors = {
+                    x: this.paintCanvas.width / this.currentCWidth,
+                    y: this.paintCanvas.height / this.currentCHeight
+                }
+            }
+            
+            const scaledData = this.getScaledContent(currentISmgData, this.scaleFactors);
 
-                this.ctx.putImageData(scaledData, 0, 0);
+            this.ctx.putImageData(scaledData, 0, 0);
 
-                this.setCurrentDimensions({
-                    w: this.paintCanvas.width,
-                    h: this.paintCanvas.height
-                });
-                
-            // }, this.repaintTimeoutDelay);
-
+            this.setCurrentDimensions({
+                w: this.paintCanvas.width,
+                h: this.paintCanvas.height
+            });
         },
 
         setCurrentDimensions(dimensions) {

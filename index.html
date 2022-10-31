@@ -443,8 +443,59 @@
                                             <td><code>setBrushSize()</code></td>
                                             <td>Die Methode erhält als Parameter einen Wert mit dem einerseits die <code>brushSize</code>-Property des <code>brush</code>-Objektes manipuliert und andererseits das <code>value</code>-Attribut der Property <code>displayBrushSize</code></td>
                                         </tr>
+                                        <tr>
+                                            <td><code>setBrushColor()</code></td>
+                                            <td>Die Methode erhält als Parameter einen Wert mit dem die <code>brushColor</code>-Property des <code>brush</code>-Objektes entsprechend der Usereingabe angepasst wird.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>setIsPainting()</code></td>
+                                            <td>Im Körper dieser Methode wird ein neuer Pfad begonnen und geendet. Hierfür wird die Property (<code>ctx</code>) welche den CanvasRenderingContext2D referenziert verwendet. <br>
+                                            Außerdem wird der Wert der <code>isPainting</code>-Property jeweils invertiert. <i>(getoggelt)</i></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>initPaintApp()</code></td>
+                                            <td>Diese Methode wird beim laden der Seite automatisch aufgerufen und initialisiert die Attribute <code>width</code> und <code>height</code> der Property <code>paintCanvas</code>, sowie die Property <code>ctx</code>. <br>
+                                            Ebenso werden durch den Aufruf vom <code>setCurrentDimensions()</code> die Properties <code>currentCWidth</code> und <code>currentCHeight</code> mit den selben Werten initialisiert.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>resizeCanvas()</code></td>
+                                            <td>Mit dieser Methode wird das responsive Verhalten des Canvas gesteuert. In diesem Zusammenahng wird auch auf die Methode <code>getScaledContent()</code> zurückgegriffen. Detailierte Erleuterungen hierzu finden Sie in einem separaten Absatz.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>setCurrentDimensions()</code></td>
+                                            <td>Diese Methode verlangt als Parameter ein Objekt (<code>dimensions</code>) welchches zwei Properties beinhaltet, welche die Werte f. Breite und Höhe des Canvas repräsentieren. Mit diesen Werten werden die Properties <code>currentCWidth</code> und <code>currentCHeight</code> modifiziert.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>setBrushPosition()</code></td>
+                                            <td>Auch diese Methode verlangt ein Objekt (<code>pos</code>) welches zwei Properties beinhaltet. Die Werte dieser Properties repräsentieren die x- und y-Koordinaten f. einen Linienanfang auf dem Canvas.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>drawOn()</code></td>
+                                            <td>
+                                                <p>Diese Methode zeichnet Pfade in der Form einzelner Linien auf den Canvas. Der Methode wird als Parameter das auslösende Event-Objekt <code>e</code> übergeben.</p>
+                                                <ol>
+                                                    <li>Es wird geprüft ob der Wert von <code>isPainting</code> gleich <code>true</code> ist. Nur wenn das der Fall ist werden die folgenden Anweisungen ausgeführt.</li>
+                                                    <li>Die Property <code>strokeStyle</code> des CanvasRenderingContext2D (<code>ctx</code>) erhält den Wert von <code>brush.brushColor</code>.</li>
+                                                    <li>Die Linienstärke wird auf den Wert von <code>brush.brushSize</code> gesetzt.</li>
+                                                    <li>Die Property <code>lineCap</code> erhält den Wert <code>'round'</code>. (Wichtig bei großen Pinselgrößen)</li>
+                                                    <li>Der Beginn der Linie wird durch die Properties <code>xPos</code> und <code>yPos</code> definiert.</li>
+                                                    <li>Zeichne eine Linie. Die Endkoordinaten dieser Linie liefern die Properties <code>offsetX</code> und <code>offsetY</code> des Event-Objekts <code>e</code>.</li>
+                                                    <li>Mit <code>stroke()</code> wird die Linie auf den Canvas gezeichnet.</li>
+                                                    <li>Durch Aufruf der Methode <code>setBrushPosition()</code> werden die Endkoordinaten dier Linie zu den Startkoordianten der folgenden.</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>clearCanvas()</code></td>
+                                            <td>Mit Hilfe der Methode <code>clearRect()</code> des CanvasRenderingContext2D unter Verwendung der aktuellen Breite und Höhe des Canvas wird die Zeichenfläche vollständig gelöscht.</td>
+                                        </tr>
                                     </tbody>
                                 </table>
+                                <h4>Die Methoden <code>resizeCanvas()</code> und <code>getScaledContent()</code></h4>
+                                <p>
+                                    <!-- todo: detailierte Funktionsweise d. beiden Methoden notieren -->
+                                </p>
                             </details>
                         </div>
 
