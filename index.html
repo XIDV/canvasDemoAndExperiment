@@ -494,8 +494,23 @@
                                 </table>
                                 <h4>Die Methoden <code>resizeCanvas()</code> und <code>getScaledContent()</code></h4>
                                 <p>
-                                    <!-- todo: detailierte Funktionsweise d. beiden Methoden notieren -->
+                                    Das Canvas-Element der paintApp soll zur Laufzeit ein responsives Verhalten aufweisen. Das bedeutet, dass sich die Dimensionen der Zeichenfläche, bei Veränderungen des Viewport automatisch anpassen. <br>
+                                    Eine Skallierung des Canvas hat jedoch zur Folge, dass die (vom User) gezeichneten Inhalte gelöscht werden. Um das zu verhindern müssen diese Inhalte vor der Skallierung gesichert und nach im Anschluss, ebenfalls skalliert wiederhergestellt werden. Die Skallierung der gesicherten Inhalte wird von der Methode <code>getScaledContent()</code> realisiert.
                                 </p>
+                                <h5>Die Methode <code>resizeCanvas()</code> im Detail:</h5>                                
+                                <ol>
+                                    <li>Die aktuellen Inhalte des Canvas werden durch Verwendung der Methode <code>getImageData()</code> des CanvasRenderingContext2D in der Konstanten <code>currentImgData</code> gesichert.</li>
+                                    <li>Breite und Höhe des Canvas werden in Abhängigkeit von der Viewportbreite, bzw. gemäß eines 3:2-Seitenverhältnis definiert.</li>
+                                    <li>Ermittlung der Skallierungsfaktoren für die x- und y-Achse. <br>
+                                    Die neuen Dimensionen des Canvas werden ins Verhältnis zu den zuvor gesicherten (vorherigen) Dimensionen gesetzt. Die Werte werden in der Property <code>scaleFactors</code> gesichert.</li>
+                                    <li>Aufruf der Methode <code>getScaledContent()</code> <br> Die Methode erhält als Parameter <code>currentImgData</code> und die zuvor ermittelten <code>scaleFactors</code>. Die skallierten Inhalte werden in der Konstanten <code>scaledData</code> gesichert.</li>
+                                    <li>Ausgabe der skallierten Inhalte auf den skallierten Canvas mit der Methode <code>putImageData()</code> des CanvasRenderingContext2D</Canvas>.</li>
+                                    <li>Abschließend wirden die Werte der Properties <code>currentCWidth</code> und <code>currentCHeight</code> aktualisiert.</li>
+                                </ol>
+                                <h5>Die Methode <code>getScaledContent()</code> im Detail:</h5>
+                                <ol>
+                                    <li></li>
+                                </ol>
                             </details>
                         </div>
 

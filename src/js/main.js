@@ -93,14 +93,14 @@ function initContent() {
         },
         
         resizeCanvas() {
-            const currentISmgData = this.ctx.getImageData(0, 0, this.currentCWidth, this.currentCHeight);
+            const currentImgData = this.ctx.getImageData(0, 0, this.currentCWidth, this.currentCHeight);
             this.paintCanvas.width = window.innerWidth * 0.6;
             this.paintCanvas.height = this.paintCanvas.width * 0.66666;
             this.scaleFactors = {
                 x: this.paintCanvas.width / this.currentCWidth,
                 y: this.paintCanvas.height / this.currentCHeight
             }
-            const scaledData = this.getScaledContent(currentISmgData, this.scaleFactors);
+            const scaledData = this.getScaledContent(currentImgData, this.scaleFactors);
             this.ctx.putImageData(scaledData, 0, 0);
             this.setCurrentDimensions({
                 w: this.paintCanvas.width,
