@@ -44,6 +44,20 @@ function initContent() {
     
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+    class Transformation {
+        transColor;
+        transSize;
+        transStart;
+        transEnd;
+        
+        constructor(color, size, start, end) {
+            this.transColor = color;
+            this.transSize = size;
+            this.transStart = start;
+            this.transEnd = end;
+        }
+
+    };
 
     const paintApp = {
         // Properties
@@ -64,6 +78,7 @@ function initContent() {
             y: undefined
         },
         isPainting: false,
+        transformations: [],
 
         // Methodes
         setBrushSize(value) {
@@ -93,15 +108,14 @@ function initContent() {
         },
         
         resizeCanvas() {
-            const currentImgData = this.ctx.getImageData(0, 0, this.currentCWidth, this.currentCHeight);
             this.paintCanvas.width = window.innerWidth * 0.6;
             this.paintCanvas.height = this.paintCanvas.width * 0.66666;
             this.scaleFactors = {
                 x: this.paintCanvas.width / this.currentCWidth,
                 y: this.paintCanvas.height / this.currentCHeight
             }
-            const scaledData = this.getScaledContent(currentImgData, this.scaleFactors);
-            this.ctx.putImageData(scaledData, 0, 0);
+
+            this.getScaledContent(this.transformations, this.scaleFactors);
             this.setCurrentDimensions({
                 w: this.paintCanvas.width,
                 h: this.paintCanvas.height
@@ -126,35 +140,55 @@ function initContent() {
                 this.ctx.moveTo(this.xPos, this.yPos);
                 this.ctx.lineTo(e.offsetX, e.offsetY);                
                 this.ctx.stroke();
+                
+                // Transformationen erfassen und sichern
+                const savedTrans = new Transformation(this.ctx.strokeStyle, this.ctx.lineWidth, { x: this.xPos, y: this.yPos }, { x: e.offsetX, y: e.offsetY });
+                this.transformations.push(savedTrans);
+
                 this.setBrushPosition({
                     x: e.offsetX,
                     y: e.offsetY
                 });
+
             }
         },
 
         clearCanvas() {
+            this.transformations = [];
             this.ctx.clearRect(0, 0, this.paintCanvas.width, this.paintCanvas.height);
+            this.initPaintApp();
         },
 
-        getScaledContent(imgData, scaleFactors) {
-            let newCanvas = document.createElement('canvas');
-            newCanvas.setAttribute('width', this.currentCWidth);
-            newCanvas.setAttribute('height', this.currentCHeight);
-            let newCTX = newCanvas.getContext('2d');
-            newCTX.putImageData(imgData, 0, 0);
+        getScaledContent(transformations, scaleFactors) {
+            for(transform in transformations) {
+                const transformation = transformations[transform];
 
-            let scaleCanvas = document.createElement('canvas');
-            scaleCanvas.setAttribute('width', this.currentCWidth);
-            scaleCanvas.setAttribute('height', this.currentCHeight);
-            let scaleCTX = scaleCanvas.getContext('2d');
+                const scaledBrush = transformation.transSize * ((scaleFactors.x + scaleFactors.y) / 2);
+                const scaledStart = {
+                    x: transformation.transStart.x * scaleFactors.x,
+                    y: transformation.transStart.y * scaleFactors.y
+                }
+                const scaledEnd = {
+                    x: transformation.transEnd.x * scaleFactors.x,
+                    y: transformation.transEnd.y * scaleFactors.y
+                }
 
-            scaleCTX.scale(scaleFactors.x, scaleFactors.y);
-            scaleCTX.drawImage(newCanvas, 0, 0);
+                this.ctx.strokeStyle = transformation.transColor;
+                this.ctx.lineCap = 'round';
+                this.ctx.lineWidth = scaledBrush;
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(scaledStart.x, scaledStart.y);
+                this.ctx.lineTo(scaledEnd.x, scaledEnd.y);
+                this.ctx.stroke();
+                this.ctx.closePath();
 
-            let scaledImgData = scaleCTX.getImageData(0, 0, scaleCanvas.width, scaleCanvas.height);
-
-            return scaledImgData;
+                transformation.transSize = scaledBrush;
+                transformation.transStart.x = scaledStart.x;
+                transformation.transStart.y = scaledStart.y;
+                transformation.transEnd.x = scaledEnd.x;
+                transformation.transEnd.y = scaledEnd.y;   
+            }
         }
     }
 
