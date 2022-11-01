@@ -81,6 +81,13 @@ function initContent() {
         transformations: [],
 
         // Methodes
+        updateTransformation(index, update) {
+            this.transformations[index].transColor = update.color;
+            this.transformations[index].transSize = update.size;
+            this.transformations[index].transStart = update.start;
+            this.transformations[index].transEnd = update.end;
+        },
+
         setBrushSize(value) {
             this.brush.brushSize = value;
             this.displayBrushSize.value = `${value} Px`;
@@ -182,12 +189,13 @@ function initContent() {
                 this.ctx.lineTo(scaledEnd.x, scaledEnd.y);
                 this.ctx.stroke();
                 this.ctx.closePath();
-
-                transformation.transSize = scaledBrush;
-                transformation.transStart.x = scaledStart.x;
-                transformation.transStart.y = scaledStart.y;
-                transformation.transEnd.x = scaledEnd.x;
-                transformation.transEnd.y = scaledEnd.y;   
+                
+                this.updateTransformation(transform, {
+                    color: transformation.transColor,
+                    size: scaledBrush,
+                    start: { x: scaledStart.x, y: scaledStart.y },
+                    end: { x: scaledEnd.x, y: scaledEnd.y }
+                });
             }
         }
     }
