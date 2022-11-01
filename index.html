@@ -490,6 +490,8 @@
                                                     <li>Der Beginn der Linie wird durch die Properties <code>xPos</code> und <code>yPos</code> definiert.</li>
                                                     <li>Zeichne eine Linie. Die Endkoordinaten dieser Linie liefern die Properties <code>offsetX</code> und <code>offsetY</code> des Event-Objekts <code>e</code>.</li>
                                                     <li>Mit <code>stroke()</code> wird die Linie auf den Canvas gezeichnet.</li>
+                                                    <li>Es wird ein <code>Transformation</code>-Objekt unter Verwendung des Konstruktors der entsprechenden Klasse erzeugt und über die Konstante <code>savedTrans</code> referenziert.</li>
+                                                    <li>Mit der Methode <code>push()</code> wird das zuvor erstellte Objekt dem Array <code>transformations</code> hinzugefügt.</li>
                                                     <li>Durch Aufruf der Methode <code>setBrushPosition()</code> werden die Endkoordinaten dier Linie zu den Startkoordianten der folgenden.</li>
                                                 </ol>
                                             </td>
@@ -516,7 +518,19 @@
                                     <li>Abschließend wirden die Werte der Properties <code>currentCWidth</code> und <code>currentCHeight</code> aktualisiert.</li>
                                 </ol>
                                 <h5>Die Methode <code>getScaledContent()</code> im Detail:</h5>
-                                <!-- todo: neu schreiben -->
+                                <p>
+                                    Die Methode erhält als Parameter ein Array <code>transformations</code> in dem alle durchgefürten Zeichenoperatonen in Form von <code>Transformation</code>-Objekten gespeichert sind, sowie die <code>scaleFactors</code>.
+                                    <p>Der Schleifenkörper wird gemäß der Anzahl von Objekten im Array oft wiederholt.</p>
+                                    <ol>
+                                        <li>Das aktuelle Transformations-Objekt wird der Konstanten <code>Transformation</code> zugewiesen.</li>
+                                        <li>Es wird ein Wert für die skallierte Pinselgröße berechnet. Hierfür wird ein Mittelwert aus den Skallierungsfaktoren der x- und y-Achse gebildet und dieser mit der aktuellen Pinselgröße multipliziert.</li>
+                                        <li>Die jeweiligen Werte der Koordinatenpaare f. Start- und Endpunkte werden ebenfalls skalliert und in entsprechenden Konstanten gesichert.</li>
+                                        <li>Mit den neuen Werten werden die Pfade auf den skallierten Canvas gezeichnet.</li>
+                                        <li>Abschließende werden das im Array <code>transformations</code> gesicherte <code>Transformation</code>-Objekt mit den neue berechneten Werten aktualisiert.</li>
+                                    </ol>
+                                </p>
+                                <h4>Die Klasse <code>Transformation</code></h4>
+                                <!-- todo: Erleuterungen hinzufügen -->
                             </details>
                         </div>
 

@@ -104,7 +104,6 @@ function initContent() {
         },
         
         initPaintApp() {
-            
             this.paintCanvas.width = window.innerWidth * 0.6;
             this.paintCanvas.height = this.paintCanvas.width * 0.66666;
             this.setCurrentDimensions({
