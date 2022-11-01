@@ -509,8 +509,17 @@
                                 </ol>
                                 <h5>Die Methode <code>getScaledContent()</code> im Detail:</h5>
                                 <ol>
-                                    <li></li>
+                                    <li>Erstelle einen neues <code>canvas</code>-Element und referenziere dieses mit <code>newCanvas</code>.</li>
+                                    <li>Setze die Attribute <code>width</code> und <code>height</code> von <code>newCanvas</code> auf die Werte welche in <code>currentCWidth</code> und <code>currentCHeight</code> gesichert sind.</li>
+                                    <li>Referenziere den CanvasRenderingContext2D von <code>newCanvas</code> über die Variable <code>newCTX</code></li>
+                                    <li>Schreibe die übergebenen Daten (<code>imgData</code>) mit <code>putImageData()</code> in <code>newCTX</code></li>
+                                    <li>Erstelle ein weiteres <code>canvas</code>-Element (<code>scaleCanvas</code>), setze ebenfalls Breite und Höhe wie zuvor bei <code>newCanvas</code> und referenziere den CanvasRenderingContext2D über die Variable <code>scaleCTX</code>.</li>
+                                    <li>Verwende die Methode <code>scale()</code> in Verbindung mit den übergebenen Skallierungsfaktoren um Die Dimensionen zu modifizieren.</li>
+                                    <li>Verwende die Methode <code>drawImage()</code> und schreibe alle Informationen aus <code>newCanvas</code> in den CanvasRenderingContext2D von <code>scaleCanvas</code></li>
+                                    <li>Lese alle Bidlinformationen aus dem <code>scaleCTX</code> aus und gebe diese zurück. (Hier nach <code>resizeCanvas()</code>)</li>
                                 </ol>
+                                <h4>Hinweis:</h4>
+                                <p>Diese Methode der Skallierung ist nicht optimal! Bei mehrfachen Skallierungsoperationen degeneriert die Bidlinformation immer mehr. (zunehmende Unschärfe)</p>
                             </details>
                         </div>
 
