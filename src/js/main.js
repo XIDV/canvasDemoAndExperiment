@@ -60,11 +60,12 @@ function initContent() {
     };
 
     const paintApp = {
-        // Properties
+        // Properties ---------------------------------------------------------
         brushSettings: document.querySelector('#brushSettings'),
         displayBrushSize: document.querySelector('#sizeDisp'),
         paintCanvas: document.querySelector('#bspl1gCanvas'),
         paintCursor: document.querySelector('#paintCursor'),
+
         currentCWidth: 0,
         currentCHeight: 0,
         xPos: 0,
@@ -73,6 +74,7 @@ function initContent() {
         brush: {
             brushSize: 5,
             brushColor: '#000000',
+            currentScaleFactor: 1
         },
         scaleFactors: {
             x: undefined,
@@ -81,7 +83,7 @@ function initContent() {
         isPainting: false,
         transformations: [],
 
-        // Methodes
+        // Methodes -----------------------------------------------------------
         updateTransformation(index, update) {
             this.transformations[index].transColor = update.color;
             this.transformations[index].transSize = update.size;
@@ -90,7 +92,7 @@ function initContent() {
         },
 
         setBrushSize(value) {
-            this.brush.brushSize = value;
+            this.brush.brushSize = value * this.brush.currentScaleFactor;
             this.displayBrushSize.value = `${value} Px`;
         },
         
@@ -122,12 +124,14 @@ function initContent() {
                 x: this.paintCanvas.width / this.currentCWidth,
                 y: this.paintCanvas.height / this.currentCHeight
             }
-
             this.getScaledContent(this.transformations, this.scaleFactors);
             this.setCurrentDimensions({
                 w: this.paintCanvas.width,
                 h: this.paintCanvas.height
             });
+            
+            const middleScaleFactor = (this.scaleFactors.x + this.scaleFactors.y) / 2;
+            this.brush.currentScaleFactor = middleScaleFactor;
         },
 
         setCurrentDimensions(dimensions) {
@@ -203,8 +207,10 @@ function initContent() {
 
 
         setCursor() {
-            this.paintCursor.style.width = `${this.brush.brushSize}px`;
-            this.paintCursor.style.height = `${this.brush.brushSize}px`;
+            const brushCursorSize = this.brush.brushSize * this.brush.currentScaleFactor;
+            this.setBrushSize(brushCursorSize);
+            this.paintCursor.style.width = `${brushCursorSize}px`;
+            this.paintCursor.style.height = `${brushCursorSize}px`;
             this.paintCursor.style.transform = 'translate(-50%, -50%)';
             this.paintCursor.style.border = `solid 1px ${this.brush.brushColor}`;
             this.paintCursor.style.borderRadius = '50%';
@@ -221,11 +227,15 @@ function initContent() {
 
     window.addEventListener('resize', e => {
         paintApp.resizeCanvas();
+        document.querySelector('#brushSize').value = paintApp.brush.brushSize;
+        paintApp.setCursor();
     },);
     
     paintApp.brushSettings.addEventListener('input', e => {
         paintApp[e.target.name](e.target.value);
-        paintApp.setCursor();
+        if(e.target.name == 'setBrushSize') {
+            paintApp.setCursor();
+        }
     });
 
     paintApp.brushSettings.addEventListener('click', e => {
