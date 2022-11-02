@@ -351,12 +351,15 @@
                             <div class="artSubtitle">Eine einfache Paint-Applikation</div>
                         </header>
                         <div class="sandboxContainer" id="bspl1gSandbox">
-
-                            <canvas id="bspl1gCanvas">
-                                <p>
-                                    Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
-                                </p>
-                            </canvas>
+                            <div id="paintCanvasContainer">
+                                <canvas id="bspl1gCanvas">
+                                    <p>
+                                        Ihr Browser unterstützt das <code>canvas</code>-Elment nicht.
+                                    </p>
+                                </canvas>
+                                <div id="paintCursor"></div>
+                                
+                            </div>
                             <form id="brushSettings">
                                 <fieldset>
                                     <legend>Pinseleigenschaften</legend>

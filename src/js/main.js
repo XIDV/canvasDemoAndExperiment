@@ -64,6 +64,7 @@ function initContent() {
         brushSettings: document.querySelector('#brushSettings'),
         displayBrushSize: document.querySelector('#sizeDisp'),
         paintCanvas: document.querySelector('#bspl1gCanvas'),
+        paintCursor: document.querySelector('#paintCursor'),
         currentCWidth: 0,
         currentCHeight: 0,
         xPos: 0,
@@ -139,6 +140,7 @@ function initContent() {
         },
         
         drawOn(e) {
+            this.setCursor(e);
             if(this.isPainting) {
                 this.ctx.strokeStyle = this.brush.brushColor;
                 this.ctx.lineWidth = this.brush.brushSize;
@@ -196,6 +198,23 @@ function initContent() {
                     end: { x: scaledEnd.x, y: scaledEnd.y }
                 });
             }
+        },
+
+
+        setCursor(e) {
+            this.paintCanvas.style.cursor = 'none';
+            this.paintCanvas.style.zIndex = '0';
+            document.querySelector('#paintCanvasContainer').style.position = 'relative';
+            this.paintCursor.style.position = 'absolute';
+            this.paintCursor.style.left = `${e.offsetX}px`;
+            this.paintCursor.style.top = `${e.offsetY}px`;
+            this.paintCursor.style.width = `${this.brush.brushSize}px`;
+            this.paintCursor.style.height = `${this.brush.brushSize}px`;
+            this.paintCursor.style.border = `solid 1px ${this.brush.brushColor}`;
+            this.paintCursor.style.borderRadius = '50%';
+            // this.paintCursor.style.zIndex = '4';
+
+            console.log();
         }
     }
 
@@ -235,8 +254,6 @@ function initContent() {
     paintApp.paintCanvas.addEventListener('mousemove', e => {
         paintApp.drawOn(e);
     });
-
-
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
