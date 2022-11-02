@@ -112,6 +112,7 @@ function initContent() {
                 h: this.paintCanvas.height
             });
             this.ctx = this.paintCanvas.getContext('2d');
+            this.setCursor();
         },
         
         resizeCanvas() {
@@ -140,7 +141,7 @@ function initContent() {
         },
         
         drawOn(e) {
-            this.setCursor(e);
+            this.moveCursor(e);
             if(this.isPainting) {
                 this.ctx.strokeStyle = this.brush.brushColor;
                 this.ctx.lineWidth = this.brush.brushSize;
@@ -201,20 +202,17 @@ function initContent() {
         },
 
 
-        setCursor(e) {
-            this.paintCanvas.style.cursor = 'none';
-            this.paintCanvas.style.zIndex = '0';
-            document.querySelector('#paintCanvasContainer').style.position = 'relative';
-            this.paintCursor.style.position = 'absolute';
-            this.paintCursor.style.left = `${e.offsetX}px`;
-            this.paintCursor.style.top = `${e.offsetY}px`;
+        setCursor() {
             this.paintCursor.style.width = `${this.brush.brushSize}px`;
             this.paintCursor.style.height = `${this.brush.brushSize}px`;
+            this.paintCursor.style.transform = 'translate(-50%, -50%)';
             this.paintCursor.style.border = `solid 1px ${this.brush.brushColor}`;
             this.paintCursor.style.borderRadius = '50%';
-            // this.paintCursor.style.zIndex = '4';
+        },
 
-            console.log();
+        moveCursor(e) {
+            this.paintCursor.style.left = `${e.offsetX}px`;
+            this.paintCursor.style.top = `${e.offsetY}px`;
         }
     }
 
@@ -227,6 +225,7 @@ function initContent() {
     
     paintApp.brushSettings.addEventListener('input', e => {
         paintApp[e.target.name](e.target.value);
+        paintApp.setCursor();
     });
 
     paintApp.brushSettings.addEventListener('click', e => {

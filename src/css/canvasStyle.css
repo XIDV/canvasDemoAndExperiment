@@ -4,16 +4,29 @@ canvas {
     margin: 0 auto;
 }
 
-/* #paintCanvasContainer {
+
+
+#bspl1gSandbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#paintCanvasContainer {
     position: relative;
-} */
+}
 
-/* #paintCursor {
+#bspl1gCanvas {
+    cursor: none;
+}
+
+#paintCursor {
     position: absolute;
+    cursor: none;
+    pointer-events: none;
+}
 
-    left: 10px;
-    top: 10px;
-    width: 10px;
-    height: 10px;
-    background-color: black;
-} */
+#brushSettings {
+    width: 100%;
+}
