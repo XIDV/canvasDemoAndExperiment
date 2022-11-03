@@ -35,7 +35,7 @@
                     </header>
                     <div class="sectionContentText">
                         <p>
-                            Das <code>canvas</code>-Element stellt quasi eine Programmierschnittstelle zum dynmaischen erstellen und anzeigen von Pixelgrafiken bereit. Der eigentliche Content wird via JavaScript erstellt. Es stellt einen Gegensatz zum SVG-Format dar, welches XML-basiert ist.
+                            Das <code>canvas</code>-Element stellt eine Programmierschnittstelle zum dynmischen erstellen und anzeigen von Pixelgrafiken bereit. Der eigentliche Content wird via JavaScript erstellt. Es stellt einen Gegensatz zum SVG-Format dar, welches XML-basiert ist.
                         </p>
                     </div>
                 </section>
@@ -73,7 +73,7 @@
                                 </summary>
                                 <p>
                                     Zum erstellen des grünen Rechtecks wird zuerst der Wert des <code>fillStyle</code>-Attributs des CanvasRenderingContext2D-Objektes (<code>context</code>) mittels Angabe eines HSLA-Wertes eingestellt. <br>
-                                    Anschließend wird die Methode <code>fillFrect()</code> aufgerufen. Dieser werden vier Parameter übergeben. Die ersten beiden sind die Startkoordianten (x/y), die nächsten zwei (hier 360 und 80) sind <strong>Längenangaben</strong>, jeweils in x- und y-Richtung. <strong>Das sind <u>keine</u> Endkoordinaten</strong>! <br>
+                                    Anschließend wird die Methode <code>fillFrect()</code> aufgerufen. Dieser werden vier Parameter übergeben. Die ersten beiden sind die Start-Koordinaten (x/y), die nächsten zwei (hier 360 und 80) sind <strong>Längenangaben</strong>, jeweils in x- und y-Richtung. <strong>Das sind <u>keine</u> Endkoordinaten</strong>! <br>
                                     Die rechnerischen Endkoordinaten wären in diesem Fall (20 + 360 und 20 + 80) <strong>x=380 und y=100</strong>.
                                 </p>
                             </details>
@@ -109,8 +109,8 @@
                                 </p>
                                 <h4>Ausgabe eines Rechtecks</h4>
                                 <p>Hier wird im Vorfeld mit <code>save()</code> der Zeichenstatus (drawing state) gespeichert, welcher später mit <code>restore() wiederhergestellt werden kann.</code><br>Welche Eigenschaften des CanvasRenderingContext2D alle gespeichert werden können entnehmen Sie bitte <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save" target="_blank">hier</a> der Dokumentation.</p>
-                                <p>Außerdem wird vor der Ausgabe des Rechtecks mit <code>translate()</code> der der Canvas (und dessen Koordiantenursprung) entsprechend der spezifizierten Werte verschoben.</p>
-                                <p>Der Ursprung des Rechtecks, welches nun ausgegeben wird befindet sich (relativ gesehen) bei x=0, y=0. Berücksichtigt man jedoch die zuvor durchgefürte Verschiebung des Canvas, so befindet sich der Ursprung des Rechtecks (global betrachtet) bei x=20, y=4.</p>
+                                <p>Außerdem wird vor der Ausgabe des Rechtecks mit <code>translate()</code> der der Canvas (und dessen Koordinatenursprung) entsprechend der spezifizierten Werte verschoben.</p>
+                                <p>Der Ursprung des Rechtecks, welches nun ausgegeben wird, befindet sich (relativ gesehen) bei x=0, y=0. Berücksichtigt man jedoch die zuvor durchgefürte Verschiebung des Canvas, so befindet sich der Ursprung des Rechtecks (global betrachtet) bei x=20, y=4.</p>
                                 
                                 <h4>Ausgabe eines Dreiecks</h4>
                                 <p>Nach der Definition einer Füllfarbe und und einer Linienstärke mit <code>lineWidth = 1;</code>, wobei letzteres eigentlich überflüssig ist, da im Folgenden keine Kontur, sondern eine dreieckige Fläche ausgegeben wird, erfolgt eine weitere Speicherung des Zeichenstatus des Canvas.</p>
@@ -163,7 +163,7 @@
                         <div class="infoBox">
                             <details>
                                 <summary>
-                                    Animierte Anzeige der akutellen Zeit innerhalb eines <code>canvas</code>-Elements.
+                                    Animierte Anzeige der aktuellenZeit innerhalb eines <code>canvas</code>-Elements.
                                 </summary>
                                 <p>
                                     Zunächst wird das <code>canvas</code>-Element in der Konstanten <code>bspl1dCanvas</code> gesichert.
@@ -234,7 +234,7 @@
                                 </summary>
                                 <h4>Kreis</h4>
                                 <p>
-                                    Die Ausgabe von Kreisen, bzw. Kreisbögen erfolgt mit der Methode <code>arc()</code>. Diese verlangt vier Parameter. Die ersten beiden definieren die Koordiaten des Kreismittelpunktes, die anderen beiden Anderen stellen den Start- und Endwinkel dar. Hierbei ist zu beachten, das diese Angaben im Bogenmaß anzugeben sind.
+                                    Die Ausgabe von Kreisen, bzw. Kreisbögen erfolgt mit der Methode <code>arc()</code>. Diese verlangt vier Parameter. Die ersten beiden definieren die Koordinaten des Kreismittelpunktes, die anderen beiden Anderen stellen den Start- und Endwinkel dar. Hierbei ist zu beachten, das diese Angaben im Bogenmaß anzugeben sind.
                                 </p>
                                 <p>
                                     Optional kann ein fünfter Parameter hinzugefügt werden, welcher definiert ob der Kreis, bzw. Bogen im, oder engegen dem Uhrzeigersinn gezeichnet werden soll. Dieser Parameter ist als boolscher Wert anzugeben. <code>true</code> bedeutet in diesem Zusammenhang, dass der Kreis/Bogen <strong>entgegen</strong> dem Uhrzeigersinn gezeichnet wird.
@@ -292,7 +292,7 @@
                         <div class="infoBox">
                             <details>
                                 <summary>
-                                    Ausgabe einer Darstellung einer Wechselspannung in einem Koordinatensystem und Einstellungsmöglichkeiten der Werte für Volt(V) und Frequenz(Hz).
+                                    Ausgabe einer Darstellung einer Wechselspannung in einem Koordinatensystem und Einstellungsmöglichkeiten der Werte für Volt(V) und Frequenz (Hz).
                                 </summary>
                                 <p>
                                     Einstiegspunkt ist, sowohl bei der Initialisierung, als auch bei Abfrage von <code>input</code>-Events für die Slider zur Einstellung v. Amplitude (<code>ampSlider</code>) und Frequenz (<code>freqSlider</code>) die Funktion <code>drawBspl1fDrawGraph()</code>. Diese ist für die Darstellung des Graphen zustädig. Außerdem erfolgt hierüber der Aufruf d. Funktion <code>drawBspl1fKoordSystem()</code> welche die Ausgabe des Koordinatensystems übernimmt.
@@ -306,13 +306,13 @@
                                     <li>und je einen Wert für die Amplitude (<code>amp</code>) und die Frequenz (<code>freq</code>).</li>
                                 </ul>
                                 <p>
-                                    Da bem laden der Seite, d. h. beim initialen Aufruf d. Funktion noch keine (vom User definierten) Werte vorliegen, werden die <code>value</code>-Werte der Eingabeslider als Default-Werte verwendet.
+                                    Da bem laden der Seite, d. h. beim initialen Aufruf d. Funktion noch keine (vom User definierten) Werte vorliegen, werden die <code>value</code>-Werte der Eingabe-Slider als Default-Werte verwendet.
                                 </p>
                                 <p>
                                     Im ersten Schritt wird die Schrittweite (<code>step</code>) berechnet. Diese ist der Quotient aus der Länge einer <strong>halben</strong> 1 Hz-Welle (100) auf dem Canvas-Element und dem Wert von <code>freq</code>, also der eingestellten Frequenz.
                                 </p>
                                 <p>
-                                    Die Konstante <code>ctx</code> f. den CanvasRenderingContext2D wird deklariert und initialisiert. Zudem wird mit mit <code>clearRect()</code> der Canvas für eine neue Zeichnung vorbereitet.
+                                    Die Konstante <code>ctx</code> f. den CanvasRenderingContext2D wird deklariert und initialisiert. Zudem wird mit <code>clearRect()</code> der Canvas für eine neue Zeichnung vorbereitet.
                                 </p>
                                 <p>
                                     Mit dem Aufruf d. Funktion <code>drawBspl1fKoordSystem()</code> wird das Koordinatensystem auf den Canvas gezeichnet. (s. nächster Abschnitt)
@@ -325,17 +325,17 @@
                                     Um diesem Problem zu begegnen wird die Konstante <code>interval</code> deklariert und initialisiert. Entweder mit dem Wert 2, oder mit dem Quotienten aus einem fixen Wert (600) und dem Wert der globalen Hilfsvariablen <code>curveEndPoint</code> welcher die Gesamtlaufweite der Kurve definiert. Entsprechend dem, auf eine Ganzzahl gerundeten Wert von <code>interval</code> werden die folgenden Anweisungen oft wiederholt.
                                 </p>
                                 <p>
-                                    Die Darstellung der Sinuskurve wird im Folgenden durch Verwendung der Methode <code>quadraticCourveTo()</code> realisiert. Für die Darstellung werden zwei dieser Kurven benötigt. Eine f. d. positiven Bereich der Welle, die Andere f. den negativen Bereich. <br>
+                                    Die Darstellung der Sinuskurve wird im Folgenden durch Verwendung der Methode <code>quadraticCourveTo()</code> realisiert. Für die Darstellung werden zwei dieser Kurven benötigt. Eine f. d. positiven Bereich der Welle, die andere f. den negativen Bereich. <br>
                                     Die Anweisungen zur Ausgabe der Kurve sind weitestgehend selbsterklärend. <br>
                                     Am Ende der <code>for</code>-Schleife wird in einem ersten Schritt die Variable <code>curveEndPoint</code>, entsprechend der neu berechneten Gesamtlaufweite der Welle, aktualisiert. <br>
-                                    Im zweiten Schritt wird wird der CanvasRenderingContext2D um eben diesn Wert in x-Richtung verschoben. Somit wird bei einem weiteren Schleifendurchlauf eine neue Welle exakt an das Ende vorausgegangenen angefügt.
+                                    Im zweiten Schritt wird der CanvasRenderingContext2D um eben diesen Wert in x-Richtung verschoben. Somit wird bei einem weiteren Schleifendurchlauf eine neue Welle exakt an das Ende vorausgegangenen angefügt.
                                 </p>
                                 <h4>Die Funktion <code>drawBspl1fKoordSystem()</code></h4>
                                 <p>
-                                    Diese Funktion zeichnet das Koordinatensystem (Achsen, Beschriftungen, Markierungn) auf den Canvas. <br>
-                                    Die Generierung der Markierungen wird jeweils für x- und y-Achse sepearat innerhalb von Schleifen realisiert. Im Fall der Markierungen f. d. x-Achse wird der CanvasRenderingContext2D temporär auf den Koordiantenursprung verschoben.
+                                    Diese Funktion zeichnet das Koordinatensystem (Achsen, Beschriftungen, Markierungen) auf den Canvas. <br>
+                                    Die Generierung der Markierungen wird jeweils für x- und y-Achse separat innerhalb von Schleifen realisiert. Im Fall der Markierungen f. d. x-Achse wird der CanvasRenderingContext2D temporär auf den Koordinatenursprung verschoben.
                                 </p>
-                                <h4>EventListener für Eingabeslider</h4>
+                                <h4>EventListener für Eingabe-Slider</h4>
                                 <p>
                                     Hier kommen EventListener vom Typ <code>input</code> zum Einsatz um unmittelbar auf Eingaben reagieren zu können. <br>
                                     Einerseits werden die jeweiligen Anzeige-Elemente <code>#freqDisp</code> und <code>#ampDisp</code> bzgl. deren <code>value</code>-Eigenschaften modifiziert, andererseits erfolgt jeweils der Aufruf der Funktion <code>drawBspl1fDrawGraph()</code> mit den entsprechenden Parametern.
@@ -384,13 +384,13 @@
                                     Malen auf dem Canvas <br>
                                     Zur Realisation einer einfachen Paint-Applikation wird hier ein objektorientierter Ansatz gewählt.
                                 </summary>
-                                <p>Es wird ein Objekt mit dem namen <code>paintApp</code> deklariert.</p>
+                                <p>Es wird ein Objekt mit dem Namen <code>paintApp</code> deklariert.</p>
                                 <h3>Properties</h3>
                                 <table>
                                     <thead>
                                         <tr>
                                             <th>Property</th>
-                                            <th>Erleuterung</th>
+                                            <th>Erläuterung</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -420,7 +420,7 @@
                                         </tr>
                                         <tr>
                                             <td><code>brush{}</code></td>
-                                            <td>Dieses Objekt beinhaltet die aktuell eingesetellten Werte f. die Pinselgröße und -farbe, sowie einen Skalierungfaktor um eine dynamische Anpassung der Prinselgröße bei Veränderungen des Viewport zu ermöglichen.</td>
+                                            <td>Dieses Objekt beinhaltet die aktuell eingestellten Werte f. die Pinselgröße und -farbe, sowie einen Skalierungsfaktor um eine dynamische Anpassung der Pinselgröße bei Veränderungen des Viewport zu ermöglichen.</td>
                                         </tr>
                                         <tr>
                                             <td><code>scaleFactors{}</code></td>
@@ -470,7 +470,7 @@
                                         </tr>
                                         <tr>
                                             <td><code>resizeCanvas()</code></td>
-                                            <td>Mit dieser Methode wird das responsive Verhalten des Canvas gesteuert. In diesem Zusammenahng wird auch auf die Methode <code>getScaledContent()</code> zurückgegriffen. Detailierte Erleuterungen hierzu finden Sie in einem separaten Absatz.
+                                            <td>Mit dieser Methode wird das responsive Verhalten des Canvas gesteuert. In diesem Zusammenhang wird auch auf die Methode <code>getScaledContent()</code> zurückgegriffen. Detaillierte Erläuterungen hierzu finden Sie in einem separaten Absatz.
                                             </td>
                                         </tr>
                                         <tr>
@@ -495,7 +495,7 @@
                                                     <li>Mit <code>stroke()</code> wird die Linie auf den Canvas gezeichnet.</li>
                                                     <li>Es wird ein <code>Transformation</code>-Objekt unter Verwendung des Konstruktors der entsprechenden Klasse erzeugt und über die Konstante <code>savedTrans</code> referenziert.</li>
                                                     <li>Mit der Methode <code>push()</code> wird das zuvor erstellte Objekt dem Array <code>transformations</code> hinzugefügt.</li>
-                                                    <li>Durch Aufruf der Methode <code>setBrushPosition()</code> werden die Endkoordinaten dier Linie zu den Startkoordianten der folgenden.</li>
+                                                    <li>Durch Aufruf der Methode <code>setBrushPosition()</code> werden die Endkoordinaten dieser Linie zu den Start-Koordinaten der folgenden.</li>
                                                 </ol>
                                             </td>
                                         </tr>
@@ -506,18 +506,19 @@
                                         <tr>
                                             <td><code>getScaledContent()</code></td>
                                             <td>Mit dieser Methode wird eine skalierte Version der bestehenden Canvas-Inhalte auf die Zeichenfläche ausgegeben. <br>
-                                            Eine detailierte Erleuterung finden Sie weiter unten.</td>
+                                            Eine detaillierte Erläuterung finden Sie weiter unten.</td>
                                         </tr>
                                         <tr>
                                             <td><code>setCursor()</code></td>
                                             <td>Diese Methode steuert die Erscheinungsform des Cursors im Sinne einer visuellen Repräsentation der eingestellten Pinseleigenschaften und unter Berücksichtigung des aktuellen Skalierungsfaktors.
                                                 <ol>
                                                     <li>Die Größe des Pinsel-Cursors (<code>brushCursorSize</code>) wird mittels der aktuelle eingestellten Pinselgröße (<code>brush.brushSize</code>) berechnet.</code></li>
-                                                    <li>Mit <code>setBrushSize</code> wird die Prinselgröße aktualisiert.</li>
+                                                    <li>Mit <code>setBrushSize</code> wird die Pinselgröße aktualisiert.</li>
                                                     <li>Die Werte der Eigenschaften <code>width</code> und <code>height</code> der <code>paintCursor</code>-Property werden mit dem berechneten Wert in <code>brushCursorSize</code> aktualisiert.</li>
-                                                    <li>Ausgeleich der horizontalen und vertikalen Verschiebung um das den <code>paintCursor</code> am Mauszeiger zu zentrieren.</li>
-                                                    <li>Anpassung der Rahmen-Eigenschaften von <code>paintCursor</code>.(Realisation einer dynamischen Anpassung der Rahmenfarbe.)</li>
+                                                    <li>Ausgeleich der horizontalen und vertikalen Verschiebung, um den <code>paintCursor</code> am Mauszeiger zu zentrieren.</li>
+                                                    <li>Dynamische Anpassung der Rahmenstärke in Abhängigkeit von der Pinselgröße.</li>
                                                     <li>Kreisförmige Darstellung des Cursors.</li>
+                                                    <li>Sofern der Methode beim Aufruf ein Parameter mitgegeben wurde wird die <code>borderColor</code>-Eigenschaften von <code>paintCursor</code> modifiziert. (Realisation einer dynamischen Anpassung der Rahmenfarbe.)</li>
                                                 </ol>
                                             </td>
                                         </tr>
@@ -546,7 +547,7 @@
                                 </ol>
                                 <h5>Die Methode <code>getScaledContent()</code> im Detail:</h5>
                                 <p>
-                                    Die Methode erhält als Parameter ein Array <code>transformations</code> in dem alle durchgefürten Zeichenoperatonen in Form von <code>Transformation</code>-Objekten gespeichert sind, sowie die <code>scaleFactors</code>.
+                                    Die Methode erhält als Parameter ein Array <code>transformations</code> in dem alle durchgeführten Zeichenoperatonen in Form von <code>Transformation</code>-Objekten gespeichert sind, sowie die <code>scaleFactors</code>.
                                     <p>Der Schleifenkörper wird gemäß der Anzahl von Objekten im Array oft wiederholt.</p>
                                     <ol>
                                         <li>Das aktuelle Transformations-Objekt wird der Konstanten <code>Transformation</code> zugewiesen.</li>
@@ -558,7 +559,7 @@
                                 </p>
                                 <h4>Die Klasse <code>Transformation</code></h4>
                                 <p>
-                                    Mit Hilfe dieser Klasse, bzw. dem <code>constructor</code> können entsprechende Objekte erzeugt werden. In den Properties dieser Objekte <code>transColor</code>, <code>transSize</code>, <code>transStart</code> und <code>transEnd</code> sind die Werte des Pinsels und die jeweiligen Start- und Endkoordinaten einer spezifischen Linienerstellung gesichert, wie sie beim zeichnen, bzw. beim neuzeichnen gegeben waren. Diese Werte dienen bei Veränderungen der Dimensionen des Viewport als Basis um bestehende Inhalte verlustfrei (unter Verwendung d. Methode <code>getScaledContent()</code>) skalieren zu können.
+                                    Mit Hilfe dieser Klasse, bzw. dem <code>constructor</code> können entsprechende Objekte erzeugt werden. In den Properties dieser Objekte <code>transColor</code>, <code>transSize</code>, <code>transStart</code> und <code>transEnd</code> sind die Werte des Pinsels und die jeweiligen Start- und Endkoordinaten einer spezifischen Linienerstellung gesichert, wie sie beim Zeichnen, bzw. beim neuzeichnen gegeben waren. Diese Werte dienen bei Veränderungen der Dimensionen des Viewport als Basis um bestehende Inhalte verlustfrei (unter Verwendung d. Methode <code>getScaledContent()</code>) skalieren zu können.
                                 </p>
                                 <p>
                                     Bei jedem Aufruf d. Methode <code>drawOn()</code> (und wenn die Property <code>isPainting</code> den Wert <code>true</code> hat) wird ein solches Objekt erzeugt und dieses dem Array <code>transformations</code> hinzugefügt. 
