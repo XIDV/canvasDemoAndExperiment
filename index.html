@@ -384,7 +384,8 @@
                                     Malen auf dem Canvas <br>
                                     Zur Realisation einer einfachen Paint-Applikation wird hier ein objektorientierter Ansatz gewählt.
                                 </summary>
-                                <p>Es wird ein Objekt mit dem namen <code>paintApp</code> deklariert. Dieses Objekt weist die folgenden Properties auf:</p>
+                                <p>Es wird ein Objekt mit dem namen <code>paintApp</code> deklariert.</p>
+                                <h3>Properties</h3>
                                 <table>
                                     <thead>
                                         <tr>
@@ -419,11 +420,11 @@
                                         </tr>
                                         <tr>
                                             <td><code>brush{}</code></td>
-                                            <td>Dieses Objekt beinhaltet die aktuell eingesetellten Werte f. die Pinselgröße und -farbe.</td>
+                                            <td>Dieses Objekt beinhaltet die aktuell eingesetellten Werte f. die Pinselgröße und -farbe, sowie einen Skalierungfaktor um eine dynamische Anpassung der Prinselgröße bei Veränderungen des Viewport zu ermöglichen.</td>
                                         </tr>
                                         <tr>
                                             <td><code>scaleFactors{}</code></td>
-                                            <td>In den Properties dieses Objektes werden die jeweils gültigen Skallierungsfaktoren hinterlegt. Diese sind im Rahmen des responsiven Verhaltens des Canvas entscheidend.</td>
+                                            <td>In den Properties dieses Objektes werden die jeweils gültigen Skalierungsfaktoren hinterlegt. Diese sind im Rahmen des responsiven Verhaltens des Canvas entscheidend.</td>
                                         </tr>
                                         <tr>
                                             <td><code>isPainting</code></td>
@@ -432,11 +433,11 @@
                                         </tr>
                                         <tr>
                                             <td><code>transformations</code></td>
-                                            <td>Ein Array in dem Objekte vom Typ <code>Transformation</code> gespeichert werden. Diese sind essentiell zur verlustfreien Skallierbarkeit der gezeichneten Inhalte des Canvas.</td>
+                                            <td>Ein Array in dem Objekte vom Typ <code>Transformation</code> gespeichert werden. Diese sind essentiell zur verlustfreien Skalierbarkeit der gezeichneten Inhalte des Canvas.</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <p>Darüber hinaus verfügt <code>paintApp</code> über die folgenden Methoden.</p>
+                                <h3>Methoden</h3>
                                 <table>
                                     <thead>
                                         <tr>
@@ -451,7 +452,7 @@
                                         </tr>
                                         <tr>
                                             <td><code>setBrushSize()</code></td>
-                                            <td>Die Methode erhält als Parameter einen Wert mit dem einerseits die <code>brushSize</code>-Property des <code>brush</code>-Objektes manipuliert und andererseits das <code>value</code>-Attribut der Property <code>displayBrushSize</code></td>
+                                            <td>Die Methode erhält als Parameter einen Wert mit dem einerseits die <code>brushSize</code>-Property des <code>brush</code>-Objektes (unter Einbeziehung des gegenwärtig gesetzten Skalierungsfaktors) manipuliert und andererseits das <code>value</code>-Attribut der Property <code>displayBrushSize</code></td>
                                         </tr>
                                         <tr>
                                             <td><code>setBrushColor()</code></td>
@@ -502,22 +503,46 @@
                                             <td><code>clearCanvas()</code></td>
                                             <td>Mit Hilfe der Methode <code>clearRect()</code> des CanvasRenderingContext2D unter Verwendung der aktuellen Breite und Höhe des Canvas wird die Zeichenfläche vollständig gelöscht.</td>
                                         </tr>
+                                        <tr>
+                                            <td><code>getScaledContent()</code></td>
+                                            <td>Mit dieser Methode wird eine skalierte Version der bestehenden Canvas-Inhalte auf die Zeichenfläche ausgegeben. <br>
+                                            Eine detailierte Erleuterung finden Sie weiter unten.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>setCursor()</code></td>
+                                            <td>Diese Methode steuert die Erscheinungsform des Cursors im Sinne einer visuellen Repräsentation der eingestellten Pinseleigenschaften und unter Berücksichtigung des aktuellen Skalierungsfaktors.
+                                                <ol>
+                                                    <li>Die Größe des Pinsel-Cursors (<code>brushCursorSize</code>) wird mittels der aktuelle eingestellten Pinselgröße (<code>brush.brushSize</code>) berechnet.</code></li>
+                                                    <li>Mit <code>setBrushSize</code> wird die Prinselgröße aktualisiert.</li>
+                                                    <li>Die Werte der Eigenschaften <code>width</code> und <code>height</code> der <code>paintCursor</code>-Property werden mit dem berechneten Wert in <code>brushCursorSize</code> aktualisiert.</li>
+                                                    <li>Ausgeleich der horizontalen und vertikalen Verschiebung um das den <code>paintCursor</code> am Mauszeiger zu zentrieren.</li>
+                                                    <li>Anpassung der Rahmen-Eigenschaften von <code>paintCursor</code>.(Realisation einer dynamischen Anpassung der Rahmenfarbe.)</li>
+                                                    <li>Kreisförmige Darstellung des Cursors.</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>moveCursor()</code></td>
+                                            <td>Das als <code>paintCursor</code> verwendete Div wird an den Mauszeiger gebunden. <br>
+                                            Die css-Eigenschaften <code>left</code> und <code>top</code> entsprechen den entsprechenden Event-Properties <code>offsetX</code> und <code>offsetY</code>.</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <h4>Die Methoden <code>resizeCanvas()</code> und <code>getScaledContent()</code></h4>
                                 <p>
                                     Das Canvas-Element der paintApp soll zur Laufzeit ein responsives Verhalten aufweisen. Das bedeutet, dass sich die Dimensionen der Zeichenfläche, bei Veränderungen des Viewport automatisch anpassen. <br>
-                                    Eine Skallierung des Canvas hat jedoch zur Folge, dass die (vom User) gezeichneten Inhalte gelöscht werden. Um das zu verhindern müssen diese Inhalte vor der Skallierung gesichert und nach im Anschluss, ebenfalls skalliert wiederhergestellt werden. Die Skallierung der gesicherten Inhalte wird von der Methode <code>getScaledContent()</code> realisiert.
+                                    Eine Skalierung des Canvas hat jedoch zur Folge, dass die (vom User) gezeichneten Inhalte gelöscht werden. Um das zu verhindern müssen diese Inhalte vor der Skalierung gesichert und nach im Anschluss, ebenfalls skaliert wiederhergestellt werden. Die Skalierung der gesicherten Inhalte wird von der Methode <code>getScaledContent()</code> realisiert.
                                 </p>
                                 <h5>Die Methode <code>resizeCanvas()</code> im Detail:</h5>                                
                                 <ol>
                                     <li>Die aktuellen Inhalte des Canvas werden durch Verwendung der Methode <code>getImageData()</code> des CanvasRenderingContext2D in der Konstanten <code>currentImgData</code> gesichert.</li>
                                     <li>Breite und Höhe des Canvas werden in Abhängigkeit von der Viewportbreite, bzw. gemäß eines 3:2-Seitenverhältnis definiert.</li>
-                                    <li>Ermittlung der Skallierungsfaktoren für die x- und y-Achse. <br>
+                                    <li>Ermittlung der Skalierungsfaktoren für die x- und y-Achse. <br>
                                     Die neuen Dimensionen des Canvas werden ins Verhältnis zu den zuvor gesicherten (vorherigen) Dimensionen gesetzt. Die Werte werden in der Property <code>scaleFactors</code> gesichert.</li>
-                                    <li>Aufruf der Methode <code>getScaledContent()</code> <br> Die Methode erhält als Parameter <code>currentImgData</code> und die zuvor ermittelten <code>scaleFactors</code>. Die skallierten Inhalte werden in der Konstanten <code>scaledData</code> gesichert.</li>
-                                    <li>Ausgabe der skallierten Inhalte auf den skallierten Canvas mit der Methode <code>putImageData()</code> des CanvasRenderingContext2D</Canvas>.</li>
-                                    <li>Abschließend wirden die Werte der Properties <code>currentCWidth</code> und <code>currentCHeight</code> aktualisiert.</li>
+                                    <li>Aufruf der Methode <code>getScaledContent()</code> <br> Die Methode erhält als Parameter <code>currentImgData</code> und die zuvor ermittelten <code>scaleFactors</code>. Die skalierten Inhalte werden in der Konstanten <code>scaledData</code> gesichert.</li>
+                                    <li>Ausgabe der skalierten Inhalte auf den skalierten Canvas mit der Methode <code>putImageData()</code> des CanvasRenderingContext2D</Canvas>.</li>
+                                    <li>Die Werte der Properties <code>currentCWidth</code> und <code>currentCHeight</code> werden aktualisiert.</li>
+                                    <li>Abschließend wird die Property <code>brush.currentScaleFactor</code> mit einem Mittelwert aus den Skalierungsfaktoren aktualisiert.</li>
                                 </ol>
                                 <h5>Die Methode <code>getScaledContent()</code> im Detail:</h5>
                                 <p>
@@ -525,14 +550,22 @@
                                     <p>Der Schleifenkörper wird gemäß der Anzahl von Objekten im Array oft wiederholt.</p>
                                     <ol>
                                         <li>Das aktuelle Transformations-Objekt wird der Konstanten <code>Transformation</code> zugewiesen.</li>
-                                        <li>Es wird ein Wert für die skallierte Pinselgröße berechnet. Hierfür wird ein Mittelwert aus den Skallierungsfaktoren der x- und y-Achse gebildet und dieser mit der aktuellen Pinselgröße multipliziert.</li>
-                                        <li>Die jeweiligen Werte der Koordinatenpaare f. Start- und Endpunkte werden ebenfalls skalliert und in entsprechenden Konstanten gesichert.</li>
-                                        <li>Mit den neuen Werten werden die Pfade auf den skallierten Canvas gezeichnet.</li>
+                                        <li>Es wird ein Wert für die skalierte Pinselgröße berechnet. Hierfür wird ein Mittelwert aus den Skalierungsfaktoren der x- und y-Achse gebildet und dieser mit der aktuellen Pinselgröße multipliziert.</li>
+                                        <li>Die jeweiligen Werte der Koordinatenpaare f. Start- und Endpunkte werden ebenfalls skaliert und in entsprechenden Konstanten gesichert.</li>
+                                        <li>Mit den neuen Werten werden die Pfade auf den skalierten Canvas gezeichnet.</li>
                                         <li>Abschließende werden das im Array <code>transformations</code> gesicherte <code>Transformation</code>-Objekt mit den neue berechneten Werten aktualisiert.</li>
                                     </ol>
                                 </p>
                                 <h4>Die Klasse <code>Transformation</code></h4>
-                                <!-- todo: Erleuterungen hinzufügen -->
+                                <p>
+                                    Mit Hilfe dieser Klasse, bzw. dem <code>constructor</code> können entsprechende Objekte erzeugt werden. In den Properties dieser Objekte <code>transColor</code>, <code>transSize</code>, <code>transStart</code> und <code>transEnd</code> sind die Werte des Pinsels und die jeweiligen Start- und Endkoordinaten einer spezifischen Linienerstellung gesichert, wie sie beim zeichnen, bzw. beim neuzeichnen gegeben waren. Diese Werte dienen bei Veränderungen der Dimensionen des Viewport als Basis um bestehende Inhalte verlustfrei (unter Verwendung d. Methode <code>getScaledContent()</code>) skalieren zu können.
+                                </p>
+                                <p>
+                                    Bei jedem Aufruf d. Methode <code>drawOn()</code> (und wenn die Property <code>isPainting</code> den Wert <code>true</code> hat) wird ein solches Objekt erzeugt und dieses dem Array <code>transformations</code> hinzugefügt. 
+                                </p>
+                                <p>
+                                    Wenn eine Veränderung des Viewport eintritt und somit eine Skalierung der Inhalte erforderlich wird, werden die bestehenden Inhalte auf Basis der gespeicherten Daten neu gezeichnet und am Ende die Daten des jeweiligen Objektes mit den neuen (skalierten) Werten aktualisiert (<code>updateTrasformation()</code>).
+                                </p>
                             </details>
                         </div>
 

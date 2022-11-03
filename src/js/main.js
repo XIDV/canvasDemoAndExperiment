@@ -77,8 +77,8 @@ function initContent() {
             currentScaleFactor: 1
         },
         scaleFactors: {
-            x: undefined,
-            y: undefined
+            x: 1,
+            y: 1
         },
         isPainting: false,
         transformations: [],
@@ -130,8 +130,7 @@ function initContent() {
                 h: this.paintCanvas.height
             });
             
-            const middleScaleFactor = (this.scaleFactors.x + this.scaleFactors.y) / 2;
-            this.brush.currentScaleFactor = middleScaleFactor;
+            this.brush.currentScaleFactor = (this.scaleFactors.x + this.scaleFactors.y) / 2;
         },
 
         setCurrentDimensions(dimensions) {
@@ -206,14 +205,19 @@ function initContent() {
         },
 
 
-        setCursor() {
-            const brushCursorSize = this.brush.brushSize * this.brush.currentScaleFactor;
-            this.setBrushSize(brushCursorSize);
-            this.paintCursor.style.width = `${brushCursorSize}px`;
-            this.paintCursor.style.height = `${brushCursorSize}px`;
-            this.paintCursor.style.transform = 'translate(-50%, -50%)';
-            this.paintCursor.style.border = `solid 1px ${this.brush.brushColor}`;
-            this.paintCursor.style.borderRadius = '50%';
+        setCursor(event = 'size') {
+            let brushCursorSize;
+            if(event == 'size') {
+                brushCursorSize = this.brush.brushSize * this.brush.currentScaleFactor;
+                this.setBrushSize(brushCursorSize); 
+                this.paintCursor.style.width = `${brushCursorSize}px`;
+                this.paintCursor.style.height = `${brushCursorSize}px`;
+                this.paintCursor.style.transform = 'translate(-50%, -50%)';
+                this.paintCursor.style.borderRadius = '50%';
+                this.paintCursor.style.border = `solid ${brushCursorSize * .05}px ${this.brush.brushColor}`;
+            } else {
+                this.paintCursor.style.borderColor = `${this.brush.brushColor}`;
+            }
         },
 
         moveCursor(e) {
@@ -235,6 +239,8 @@ function initContent() {
         paintApp[e.target.name](e.target.value);
         if(e.target.name == 'setBrushSize') {
             paintApp.setCursor();
+        } else {
+            paintApp.setCursor('color');
         }
     });
 
